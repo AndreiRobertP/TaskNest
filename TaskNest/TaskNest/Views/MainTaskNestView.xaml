@@ -1,0 +1,111 @@
+﻿<Window x:Class="TaskNest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskNest"
+        xmlns:viewModels="clr-namespace:TaskNest.ViewModels"
+        xmlns:models="clr-namespace:TaskNest.Models"
+        mc:Ignorable="d"
+        Title="TaskNest" Height="450" Width="800"
+        MinHeight="450" MinWidth="750">
+
+    <Window.DataContext>
+        <viewModels:MainWindowVm/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MaxWidth="300"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- MENU -->
+        <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <MenuItem Header="File">
+                <MenuItem Header="Open database"/>
+                <MenuItem Header="New database"/>
+                <MenuItem Header="Archive database"/>
+                <MenuItem Header="Exit"/>
+            </MenuItem>
+            <MenuItem Header="TDL">
+                <MenuItem Header="Add root TDL"/>
+                <MenuItem Header="Add sub-TDL"/>
+                <MenuItem Header="Edit"/>
+                <MenuItem Header="Delete"/>
+                <MenuItem Header="Move Up"/>
+                <MenuItem Header="Move Down"/>
+                <MenuItem Header="Change Path"/>
+            </MenuItem>
+            <MenuItem Header="Task">
+                <MenuItem Header="Add" Name="MniTaskAdd" Click="MniTaskAdd_OnClick"/>
+                <MenuItem Header="Edit" Name="MniTaskEdit" Click="MniTaskEdit_OnClick"/>
+                <MenuItem Header="Delete" Name="MniTaskDelete" Click="MniTaskDelete_OnClick"/>
+                <MenuItem Header="Toggle Done" Name="MniTaskToggle" Click="MniTaskToggle_OnClick"/>
+                <MenuItem Header="Move Up" Name="MniTaskMoveUp" Click="MniTaskMoveUp_OnClick"/>
+                <MenuItem Header="Move Down" Name="MniTaskMoveDown" Click="MniTaskMoveDown_OnClick"/>
+                <MenuItem Header="Manage Category"/>
+                <MenuItem Header="Find Task"/>
+            </MenuItem>
+            <MenuItem Header="View">
+                <MenuItem Header="Sort"></MenuItem>
+                <MenuItem Header="Filter"></MenuItem>
+                <MenuItem Header="Statistics" Name="MniStatsToggle" IsCheckable="true" IsChecked="True" Click="MniStatsToggle_OnClick"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Help"/>
+        </Menu>
+
+        <!-- LEFT EXPLORER -->
+        <DockPanel Grid.Row="1" Grid.Column="0" Margin="5" VerticalAlignment="Stretch" >
+
+            <!-- STATS -->
+            <StackPanel Name="StpStats"  Background="GhostWhite" Margin="5" DockPanel.Dock="Bottom">
+                <Label Content="{Binding StDueToday}"/>
+                <Label Content="{Binding StDueTomorrow}"/>
+                <Label Content="{Binding StDueOverdue}"/>
+                <Separator/>
+                <Label Content="{Binding StDone}"/>
+                <Label Content="{Binding StNotDone}"/>
+            </StackPanel>
+
+            <!-- TREEVIEW -->
+            <TreeView  Margin="5"  VerticalAlignment="Stretch" x:Name="TvwMenu" ItemsSource="{Binding ToDoLists}" SelectedItemChanged="TvwMenu_OnSelectedItemChanged">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type models:ToDoList}" ItemsSource="{Binding SubLists }">
+                        <StackPanel Orientation="Horizontal" Margin="2">
+                            <Image Source="{Binding IconUriStr}" Height="20" Margin="0,0,2,0"/>
+                            <TextBlock Text="{Binding Name}" FontSize="12" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+        </DockPanel>
+
+        <!-- RIGHT TABLE -->
+        <Grid Grid.Row="1" Column="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0">Viewing to do list.</Label>
+            <DataGrid Grid.Row="1" Name="DtgTasks" ItemsSource="{Binding Tasks}" AutoGenerateColumns="False" SelectedCellsChanged="DtgTasks_OnSelectedCellsChanged" SelectionMode="Single" AlternatingRowBackground="FloralWhite">
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn IsReadOnly="True" Binding="{Binding IsDone}"/>
+                    <DataGridTextColumn Header="Task name" Width="*" IsReadOnly="True" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Priority" Width="auto" IsReadOnly="True" Binding="{Binding Priority}"/>
+                    <DataGridTextColumn Header="Type" Width="auto" IsReadOnly="True" Binding="{Binding Category}" />
+                    <DataGridTextColumn Header="Due date" Width="auto" IsReadOnly="True" Binding="{Binding DueDate}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Label Grid.Row="2"> Details </Label>
+            <TextBox Grid.Row="3" IsReadOnly="True" Name="TxbTaskDetails" Text="{Binding TaskContent, Mode=OneWay}" />
+        </Grid>
+    </Grid>
+</Window>
