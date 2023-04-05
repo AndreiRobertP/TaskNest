@@ -30,10 +30,10 @@
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CurrentTask.Name}"></TextBox>
 
         <Label Grid.Row="2" Grid.Column="0">Priority:</Label>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding CurrentTask.Priority}"></TextBox>
+        <ComboBox Name="CmbPriority" Grid.Row="2" Grid.Column="1" SelectedValue="{Binding CurrentTask.Priority}" Loaded="CmbPriority_OnLoaded"></ComboBox>
 
         <Label Grid.Row="3" Grid.Column="0">Category:</Label>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CurrentTask.Category}"></TextBox>
+        <ComboBox Name="CmbCategory" Grid.Row="3" Grid.Column="1" SelectedValue="{Binding CurrentTask.Category}" Loaded="CmbCategory_OnLoaded"></ComboBox>
 
         <Label Grid.Row="4" Grid.Column="0">Date:</Label>
         <DatePicker Grid.Row="4" Grid.Column="1" SelectedDate="{Binding CurrentTask.DueDateTime}" FirstDayOfWeek="Monday"></DatePicker>

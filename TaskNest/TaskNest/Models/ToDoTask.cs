@@ -6,14 +6,14 @@ namespace TaskNest.Models
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public int Priority { get; set; }
-        public int Category { get; set; }
+        public EPriority Priority { get; set; }
+        public ECategory Category { get; set; }
         public DateTime DueDateTime { get; set; }
 
         public string DueDate => DueDateTime.ToString("d/M/yy");
         public bool IsDone { get; set; }
 
-        public ToDoTask(string name, string description, int priority, int category, DateTime dueDateTime, bool isDone = false)
+        public ToDoTask(string name, string description, EPriority priority, ECategory category, DateTime dueDateTime, bool isDone = false)
         {
             Name = name;
             Description = description;

@@ -125,9 +125,9 @@ namespace TaskNest.ViewModels
             td2.SubLists.Add(new ToDoList("Homework 2", 2));
 
             td3.SubLists.Add(new ToDoList("Clean", 1));
-            td3.Tasks.Add(new ToDoTask("Clean bedroom", ":)", 1, 1, DateTime.Today));
-            td3.Tasks.Add(new ToDoTask("Clean kitchen", "Don't forget about refrigerator", 1, 1, DateTime.Today));
-            td3.Tasks.Add(new ToDoTask("Do the dishes", "Check if there is any Fairy left", 2, 4, DateTime.Today));
+            td3.Tasks.Add(new ToDoTask("Clean bedroom", ":)", EPriority.Low, ECategory.Work, DateTime.Today));
+            td3.Tasks.Add(new ToDoTask("Clean kitchen", "Don't forget about refrigerator", EPriority.High, ECategory.Work, DateTime.Today));
+            td3.Tasks.Add(new ToDoTask("Do the dishes", "Check if there is any Fairy left", EPriority.High, ECategory.Work, DateTime.Today));
             Db.RootLists.Add(td3);
 
         }

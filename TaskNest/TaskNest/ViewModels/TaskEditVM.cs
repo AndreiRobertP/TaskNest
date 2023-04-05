@@ -21,7 +21,7 @@ namespace TaskNest.ViewModels
             ListOfTasks = listOfTasks;
             ParentList = parent;
             OriginalTask = originalTask;
-            CurrentTask = new ToDoTask("", "", 1, 1, DateTime.Today);
+            CurrentTask = new ToDoTask("", "", EPriority.Low, ECategory.None, DateTime.Today);
 
             if (OriginalTask != null)
             {

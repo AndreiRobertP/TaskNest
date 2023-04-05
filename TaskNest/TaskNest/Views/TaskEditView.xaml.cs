@@ -30,6 +30,9 @@ namespace TaskNest.Views
             InitializeComponent();
             Tevm = new TaskEditVM(listOfTasks, parent, originalTask);
             DataContext = Tevm;
+
+            CmbCategory.ItemsSource = Enum.GetNames(typeof(ECategory));
+            CmbPriority.ItemsSource = Enum.GetNames(typeof(EPriority));
         }
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
@@ -52,6 +55,16 @@ namespace TaskNest.Views
             DialogResult = true;
             Close();
             MessageBox.Show("Task saved", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void CmbCategory_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            CmbCategory.SelectedIndex = (int)Tevm.CurrentTask.Category;
+        }
+
+        private void CmbPriority_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            CmbPriority.SelectedIndex = (int)Tevm.CurrentTask.Priority;
         }
     }
 }

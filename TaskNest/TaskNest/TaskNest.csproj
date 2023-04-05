@@ -55,6 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Priority.cs" />
     <Compile Include="Services\ToDoTaskService.cs" />
     <Compile Include="ViewModels\TaskEditVM.cs" />
     <Compile Include="Views\TaskEditView.xaml.cs">
