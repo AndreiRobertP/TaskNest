@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace TaskNest.Models
@@ -56,6 +57,22 @@ namespace TaskNest.Models
             }
 
             return count;
+        }
+
+        public ObservableCollection<TDTSearchResult> FindTask(Func<ToDoTask, bool> predWhatFind)
+        {
+            ObservableCollection<TDTSearchResult> result = new ObservableCollection<TDTSearchResult>();
+ 
+            foreach (var lst in RootLists)
+            {
+                var partialResultsSublist = lst.FindTask(predWhatFind);
+                foreach (var pr in partialResultsSublist)
+                {
+                    result.Add(pr);
+                }
+            }
+
+            return result;
         }
     }
 }

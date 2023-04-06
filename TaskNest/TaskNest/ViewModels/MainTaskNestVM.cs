@@ -14,7 +14,7 @@ namespace TaskNest.ViewModels
 {
     public class MainWindowVm : INotifyPropertyChanged
     {
-        private ToDoDatabase Db { get; set; }
+        public ToDoDatabase Db { get; set; }
 
         // Current List
         private ToDoList _currentToDoList;

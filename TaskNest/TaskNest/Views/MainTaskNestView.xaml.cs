@@ -104,5 +104,12 @@ namespace TaskNest
 
             ToDoTaskService.DeleteTask(Mvvm.CurrentToDoTask, Mvvm.CurrentToDoList);
         }
+
+        private void MniTaskFind_OnClick(object sender, RoutedEventArgs e)
+        {
+            TaskSearchView taskSearchView = new TaskSearchView();
+            taskSearchView.SetDatabase(Mvvm.Db);
+            taskSearchView.Show();
+        }
     }
 }

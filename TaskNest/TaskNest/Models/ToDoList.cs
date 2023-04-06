@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -55,6 +58,39 @@ namespace TaskNest.Models
             }
 
             return result;
+        }
+
+        public List<TDTSearchResult> FindTask(Func<ToDoTask, bool> predWhatFind)
+        {
+            List<TDTSearchResult> result = new List<TDTSearchResult>();
+            foreach (var tsk in Tasks)
+            {
+                if (predWhatFind(tsk))
+                    result.Add(new TDTSearchResult(tsk, this.Name));
+            }
+
+            foreach (var lst in SubLists)
+            {
+                var partialResultsSublist = lst.FindTask(predWhatFind);
+                foreach (var pr in partialResultsSublist)
+                {
+                    result.Add(new TDTSearchResult(pr.Task,  this.Name + " > " + pr.Path));
+                }
+            }
+
+            return result;
+        }
+    }
+
+    public class TDTSearchResult
+    {
+        public ToDoTask Task { get; set; }
+        public string Path { get; set; }
+
+        public TDTSearchResult(ToDoTask task, string path)
+        {
+            Task = task;
+            Path = path;
         }
     }
 }
