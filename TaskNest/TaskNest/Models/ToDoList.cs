@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace TaskNest.Models
 {
-    public class ToDoList
+    public class ToDoList : IToDoListNode
     {
         public string Name { get; set; }
         public int IconId { get; set; }
@@ -60,9 +60,9 @@ namespace TaskNest.Models
             return result;
         }
 
-        public List<TDTSearchResult> FindTask(Func<ToDoTask, bool> predWhatFind)
+        public ObservableCollection<TDTSearchResult> FindTask(Func<ToDoTask, bool> predWhatFind)
         {
-            List<TDTSearchResult> result = new List<TDTSearchResult>();
+            ObservableCollection<TDTSearchResult> result = new ObservableCollection<TDTSearchResult>();
             foreach (var tsk in Tasks)
             {
                 if (predWhatFind(tsk))
@@ -79,6 +79,17 @@ namespace TaskNest.Models
             }
 
             return result;
+        }
+
+
+        public void AddSublist(ToDoList list)
+        {
+            SubLists.Add(list);
+        }
+
+        public void RemoveSublist(ToDoList list)
+        {
+            SubLists.Remove(list);
         }
     }
 

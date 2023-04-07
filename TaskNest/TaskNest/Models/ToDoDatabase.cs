@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TaskNest.Models
 {
-    public class ToDoDatabase
+    public class ToDoDatabase : IToDoListNode
     {
         public ObservableCollection<ToDoList> RootLists { get; set; }
         public ToDoDatabase()
@@ -62,7 +62,7 @@ namespace TaskNest.Models
         public ObservableCollection<TDTSearchResult> FindTask(Func<ToDoTask, bool> predWhatFind)
         {
             ObservableCollection<TDTSearchResult> result = new ObservableCollection<TDTSearchResult>();
- 
+
             foreach (var lst in RootLists)
             {
                 var partialResultsSublist = lst.FindTask(predWhatFind);
@@ -73,6 +73,16 @@ namespace TaskNest.Models
             }
 
             return result;
+        }
+
+        public void AddSublist(ToDoList list)
+        {
+            RootLists.Add(list);
+        }
+
+        public void RemoveSublist(ToDoList list)
+        {
+            RootLists.Remove(list);
         }
     }
 }
