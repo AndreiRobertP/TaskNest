@@ -65,40 +65,11 @@ namespace TaskNest.ViewModels
 
 
         // Stats
-        public string StDueToday {
-            get
-            {
-                return $"Tasks due today: {Db.GetNumSubTasksByPredicate((tsk) => !tsk.IsDone && tsk.DueDateTime.Date == DateTime.Today.Date)}";
-            }
-        }
-        public string StDueTomorrow
-        {
-            get
-            {
-                return $"Tasks due tomorrow: {Db.GetNumSubTasksByPredicate((tsk) => !tsk.IsDone && tsk.DueDateTime.Date == DateTime.Today.Date + TimeSpan.FromDays(1))}";
-            }
-        }
-        public string StDueOverdue
-        {
-            get
-            {
-                return $"Tasks overdue: {Db.GetNumSubTasksByPredicate((tsk) => !tsk.IsDone && tsk.DueDateTime.Date < DateTime.Today.Date)}";
-            }
-        }
-        public string StDone
-        {
-            get
-            {
-                return $"Tasks done: {Db.GetNumSubTasksByPredicate((tsk) => tsk.IsDone)}";
-            }
-        }
-        public string StNotDone
-        {
-            get
-            {
-                return $"Tasks to be done: {Db.GetNumSubTasksByPredicate((tsk) => !tsk.IsDone)}";
-            }
-        }
+        public string StDueToday => $"Tasks due today: {Db.GetNumSubTasksByPredicate((tsk) => !tsk.IsDone && tsk.DueDateTime.Date == DateTime.Today.Date)}";
+        public string StDueTomorrow => $"Tasks due tomorrow: {Db.GetNumSubTasksByPredicate((tsk) => !tsk.IsDone && tsk.DueDateTime.Date == DateTime.Today.Date + TimeSpan.FromDays(1))}";
+        public string StDueOverdue => $"Tasks overdue: {Db.GetNumSubTasksByPredicate((tsk) => !tsk.IsDone && tsk.DueDateTime.Date < DateTime.Today.Date)}";
+        public string StDone => $"Tasks done: {Db.GetNumSubTasksByPredicate((tsk) => tsk.IsDone)}";
+        public string StNotDone => $"Tasks to be done: {Db.GetNumSubTasksByPredicate((tsk) => !tsk.IsDone)}";
 
         //Extra
         public ObservableCollection<ToDoTask> AllTasks => Db.GetToDoTasksSubtree();
@@ -148,6 +119,18 @@ namespace TaskNest.ViewModels
             NotifyPropertyChanged("StDueOverdue");
             NotifyPropertyChanged("StDone");
             NotifyPropertyChanged("StNotDone");
+        }
+
+        public void NotifyPropertyChangedTasks()
+        {
+            NotifyPropertyChanged("Tasks");
+            NotifyPropertyChangedStatistics();
+        }
+
+        public void NotifyPropertyChangedLists()
+        {
+            NotifyPropertyChanged("ToDoLists");
+            NotifyPropertyChangedTasks();
         }
     }
 }

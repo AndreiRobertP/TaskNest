@@ -56,13 +56,19 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\Categories.cs" />
+    <Compile Include="Models\IToDoListNode.cs" />
     <Compile Include="Models\Priority.cs" />
+    <Compile Include="Services\ToDoListService.cs" />
     <Compile Include="Services\ToDoTaskService.cs" />
     <Compile Include="ViewModels\CategoriesManageVM.cs" />
+    <Compile Include="ViewModels\ListEditVM.cs" />
     <Compile Include="ViewModels\TaskEditVM.cs" />
     <Compile Include="ViewModels\TaskSearchVM.cs" />
     <Compile Include="Views\CategoriesManageView.xaml.cs">
       <DependentUpon>CategoriesManageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ListEditView.xaml.cs">
+      <DependentUpon>ListEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TaskEditView.xaml.cs">
       <DependentUpon>TaskEditView.xaml</DependentUpon>
@@ -71,6 +77,10 @@
       <DependentUpon>TaskSearchView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\CategoriesManageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ListEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

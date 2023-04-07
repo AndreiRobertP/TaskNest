@@ -35,12 +35,7 @@ namespace TaskNest
         private void MniStatsToggle_OnClick(object sender, RoutedEventArgs e)
         {
             StpStats.Visibility = StpStats.IsVisible ? Visibility.Collapsed : Visibility.Visible;
-            Mvvm.NotifyPropertyChangedStatistics();
-        }
-
-        private void DtgTasks_OnCellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            Mvvm.NotifyPropertyChangedStatistics();
+            Mvvm.NotifyPropertyChangedTasks();
         }
 
         private void MniTaskAdd_OnClick(object sender, RoutedEventArgs e)
@@ -52,7 +47,7 @@ namespace TaskNest
             var result = editWindow.ShowDialog();
             if (result.HasValue && result.Value)
             {
-                Mvvm.NotifyPropertyChangedStatistics();
+                Mvvm.NotifyPropertyChangedTasks();
             }
         }
 
@@ -68,7 +63,7 @@ namespace TaskNest
             var result = editWindow.ShowDialog();
             if (result.HasValue && result.Value)
             {
-                Mvvm.NotifyPropertyChangedStatistics();
+                Mvvm.NotifyPropertyChangedTasks();
             }
         }
 
@@ -78,7 +73,7 @@ namespace TaskNest
                 return;
 
             ToDoTaskService.ToggleTaskDone(Mvvm.CurrentToDoTask);
-            Mvvm.NotifyPropertyChangedStatistics();
+            Mvvm.NotifyPropertyChangedTasks();
         }
 
         private void MniTaskMoveUp_OnClick(object sender, RoutedEventArgs e)
@@ -87,6 +82,7 @@ namespace TaskNest
                 return;
 
             ToDoTaskService.MoveTask(Mvvm.CurrentToDoTask, Mvvm.CurrentToDoList, true);
+            Mvvm.NotifyPropertyChangedTasks();
         }
 
         private void MniTaskMoveDown_OnClick(object sender, RoutedEventArgs e)
@@ -95,6 +91,7 @@ namespace TaskNest
                 return;
 
             ToDoTaskService.MoveTask(Mvvm.CurrentToDoTask, Mvvm.CurrentToDoList, false);
+            Mvvm.NotifyPropertyChangedTasks();
         }
 
         private void MniTaskDelete_OnClick(object sender, RoutedEventArgs e)
@@ -103,6 +100,7 @@ namespace TaskNest
                 return;
 
             ToDoTaskService.DeleteTask(Mvvm.CurrentToDoTask, Mvvm.CurrentToDoList);
+            Mvvm.NotifyPropertyChangedTasks();
         }
 
         private void MniTaskFind_OnClick(object sender, RoutedEventArgs e)
@@ -112,15 +110,42 @@ namespace TaskNest
             taskSearchView.Show();
         }
 
-        private void DtgTasks_SelectionChanged()
-        {
-
-        }
-
         private void MniTaskManage_OnClick(object sender, RoutedEventArgs e)
         {
             CategoriesManageView categoriesManageView = new CategoriesManageView(Mvvm.Db);
             categoriesManageView.Show();
+
+            Mvvm.NotifyPropertyChangedTasks();
+        }
+
+        private void MniTdlRootAdd_OnClick(object sender, RoutedEventArgs e)
+        {
+            ListEditView listEditView = new ListEditView(Mvvm.Db, Mvvm.Db.GetToDoListsSubtree(), null);
+            listEditView.ShowDialog();
+
+            Mvvm.NotifyPropertyChangedLists();
+        }
+
+        private void MniTdlSubAdd_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (Mvvm.CurrentToDoList == null)
+                return;
+
+            ListEditView listEditView = new ListEditView(Mvvm.CurrentToDoList, Mvvm.Db.GetToDoListsSubtree(), null);
+            listEditView.ShowDialog();
+
+            Mvvm.NotifyPropertyChangedLists();
+        }
+
+        private void MniTdlEdit_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (Mvvm.CurrentToDoList == null)
+                return;
+
+            ListEditView listEditView = new ListEditView(Mvvm.CurrentToDoList, Mvvm.Db.GetToDoListsSubtree(), Mvvm.CurrentToDoList);
+            listEditView.ShowDialog();
+
+            Mvvm.NotifyPropertyChangedLists();
         }
     }
 }
