@@ -15,13 +15,14 @@ namespace TaskNest.ViewModels
         public ToDoTask OriginalTask { get; set; }
         public ToDoTask CurrentTask { get; set; }
         public ToDoList ParentList { get; set; }
+        public ObservableCollection<string> AvaliableCategories => Categories.Cats;
 
         public TaskEditVM(ObservableCollection<ToDoTask> listOfTasks, ToDoList parent, ToDoTask originalTask)
         {
             ListOfTasks = listOfTasks;
             ParentList = parent;
             OriginalTask = originalTask;
-            CurrentTask = new ToDoTask("", "", EPriority.Low, ECategory.None, DateTime.Today);
+            CurrentTask = new ToDoTask("", "", EPriority.Low, "", DateTime.Today);
 
             if (OriginalTask != null)
             {
@@ -29,7 +30,7 @@ namespace TaskNest.ViewModels
                     Copy(OriginalTask.Name),
                     Copy(OriginalTask.Description),
                     OriginalTask.Priority,
-                    OriginalTask.Category,
+                    Copy(OriginalTask.Category),
                     OriginalTask.DueDateTime,
                     OriginalTask.IsDone
                 );

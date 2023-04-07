@@ -111,5 +111,10 @@ namespace TaskNest
             taskSearchView.SetDatabase(Mvvm.Db);
             taskSearchView.Show();
         }
+
+        private void DtgTasks_SelectionChanged()
+        {
+
+        }
     }
 }

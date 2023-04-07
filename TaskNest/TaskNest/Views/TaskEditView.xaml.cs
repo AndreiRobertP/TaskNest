@@ -31,7 +31,7 @@ namespace TaskNest.Views
             Tevm = new TaskEditVM(listOfTasks, parent, originalTask);
             DataContext = Tevm;
 
-            CmbCategory.ItemsSource = Enum.GetNames(typeof(ECategory));
+            CmbCategory.ItemsSource = Tevm.AvaliableCategories;
             CmbPriority.ItemsSource = Enum.GetNames(typeof(EPriority));
         }
 
@@ -59,7 +59,7 @@ namespace TaskNest.Views
 
         private void CmbCategory_OnLoaded(object sender, RoutedEventArgs e)
         {
-            CmbCategory.SelectedIndex = (int)Tevm.CurrentTask.Category;
+            CmbCategory.SelectedIndex = Categories.GetCategoryIndex(Tevm.CurrentTask.Category);
         }
 
         private void CmbPriority_OnLoaded(object sender, RoutedEventArgs e)

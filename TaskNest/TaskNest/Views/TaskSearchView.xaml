@@ -27,18 +27,18 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="30" FontWeight="Bold">Search Task</Label>
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="30" FontWeight="Bold" Margin="0,5,0,10">Search Task</Label>
         
         <Label Grid.Row="1" Grid.Column="0">Name</Label>
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding TextEntered}"></TextBox>
 
-        <Label Grid.Row="2" Grid.Column="0">Date</Label>
-        <DatePicker Grid.Row="2" Grid.Column="1" FirstDayOfWeek="Monday" DisplayDate="{Binding DateEntered}"></DatePicker>
+        <Label Grid.Row="2" Grid.Column="0" Margin="0,5,0,5">Date</Label>
+        <DatePicker Grid.Row="2" Grid.Column="1" FirstDayOfWeek="Monday" SelectedDate="{Binding DateEntered}" Margin="0,5,0,5"></DatePicker>
 
         <RadioButton Name="RbtFindByName" Grid.Row="3" Grid.Column="0" GroupName="GrpFindBy" IsChecked="{Binding IsSearchingByName}"> Find by name</RadioButton>
         <RadioButton Name="RbtFindByDate" Grid.Row="3" Grid.Column="1" GroupName="GrpFindBy" IsChecked="False"> Find by date</RadioButton>
 
-        <DataGrid Name="DtgInfo" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="15" ItemsSource="{Binding SearchResults}" AutoGenerateColumns="False">
+        <DataGrid Name="DtgInfo" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,15" ItemsSource="{Binding SearchResults}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Task name" Width="auto" IsReadOnly="True" Binding="{Binding Task.Name}"/>
                 <DataGridTextColumn Header="Due date" Width="auto" IsReadOnly="True" Binding="{Binding Task.DueDate}" />

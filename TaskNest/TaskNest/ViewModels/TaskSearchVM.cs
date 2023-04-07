@@ -18,7 +18,7 @@ namespace TaskNest.ViewModels
             SearchResults = new ObservableCollection<TDTSearchResult>();
             IsSearchingByName = true;
             DateEntered = DateTime.Now.Date;
-            TextEntered = "Clean";
+            TextEntered = "";
         }
 
         public void SetDatabase(ToDoDatabase db)
@@ -28,7 +28,6 @@ namespace TaskNest.ViewModels
 
         public void RunSearch()
         {
-            string criteriumName = TextEntered;
             Func<ToDoTask, bool> predFindWhat;
 
             if (IsSearchingByName)
