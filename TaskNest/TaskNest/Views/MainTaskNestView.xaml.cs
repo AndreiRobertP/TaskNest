@@ -116,5 +116,11 @@ namespace TaskNest
         {
 
         }
+
+        private void MniTaskManage_OnClick(object sender, RoutedEventArgs e)
+        {
+            CategoriesManageView categoriesManageView = new CategoriesManageView(Mvvm.Db);
+            categoriesManageView.Show();
+        }
     }
 }

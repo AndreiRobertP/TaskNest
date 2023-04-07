@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Runtime.Remoting.Channels;
-using System.Windows.Documents;
 
 namespace TaskNest.Models
 {
@@ -29,5 +28,39 @@ namespace TaskNest.Models
             }
         }
 
+        public static bool CheckCategoryExists(string cat)
+        {
+            foreach (var c in Cats)
+            {
+                if (c.Equals(cat))
+                    return true;
+            }
+
+            return false;
+        }
+
+        public static void AddNewCat(string cat)
+        {
+            Cats.Add(cat);
+        }
+
+        public static void DeleteCat(string cat)
+        {
+            var foundAt = GetCategoryIndex(cat);
+            if(foundAt == -1)
+                return;
+            Cats.RemoveAt(foundAt);
+        }
+
+        public static bool IsJustDefaultCategory()
+        {
+            return Cats.Count == 1;
+        }
+
+        public static void UpdateCategoryName(string oldName, string newName)
+        {
+            var index = GetCategoryIndex(oldName);
+            Cats[index] = String.Copy(newName);
+        }
     }
 }

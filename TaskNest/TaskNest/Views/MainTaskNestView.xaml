@@ -50,14 +50,8 @@
                 <MenuItem Header="Toggle Done" Name="MniTaskToggle" Click="MniTaskToggle_OnClick"/>
                 <MenuItem Header="Move Up" Name="MniTaskMoveUp" Click="MniTaskMoveUp_OnClick"/>
                 <MenuItem Header="Move Down" Name="MniTaskMoveDown" Click="MniTaskMoveDown_OnClick"/>
-                <MenuItem Header="Manage Category" Name="MniTaskManage"/>
+                <MenuItem Header="Manage Category" Name="MniTaskManage" Click="MniTaskManage_OnClick"/>
                 <MenuItem Header="Find Task" Name="MniTaskFind" Click="MniTaskFind_OnClick"/>
-                <MenuItem Header="Sort Task">
-                    <MenuItem Header="Name"/>
-                    <MenuItem Header="Priority"/>
-                    <MenuItem Header="Category"/>
-                    <MenuItem Header="Due"/>
-                </MenuItem>
             </MenuItem>
             <MenuItem Header="View">
                 <MenuItem Header="Sort"></MenuItem>
