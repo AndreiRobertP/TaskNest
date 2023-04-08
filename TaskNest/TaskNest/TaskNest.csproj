@@ -58,6 +58,7 @@
     <Compile Include="Models\Categories.cs" />
     <Compile Include="Models\IToDoListNode.cs" />
     <Compile Include="Models\Priority.cs" />
+    <Compile Include="Services\ToDoDatabaseService.cs" />
     <Compile Include="Services\ToDoListService.cs" />
     <Compile Include="Services\ToDoTaskService.cs" />
     <Compile Include="ViewModels\CategoriesManageVM.cs" />

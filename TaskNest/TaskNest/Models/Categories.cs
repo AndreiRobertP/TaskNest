@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Xml.Serialization;
 
 namespace TaskNest.Models
 {
+    [Serializable]
     public class Categories
     {
+        [XmlArray]
         public ObservableCollection<string> Cats { get; set; } = new ObservableCollection<string>();
 
         public int GetCategoryIndex(string cat)

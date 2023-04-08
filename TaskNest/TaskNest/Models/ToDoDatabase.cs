@@ -2,14 +2,15 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Xml.Serialization;
 
 namespace TaskNest.Models
 {
+    [Serializable]
     public class ToDoDatabase : IToDoListNode, INotifyPropertyChanged
     {
-
         private BindingList<ToDoList> _rootLists;
-
+        [XmlArray]
         public BindingList<ToDoList> RootLists
         {
             get => _rootLists;
@@ -21,6 +22,7 @@ namespace TaskNest.Models
         }
 
         private Categories _categories;
+        [XmlElement]
         public Categories Categories { get => _categories;
             set
             {

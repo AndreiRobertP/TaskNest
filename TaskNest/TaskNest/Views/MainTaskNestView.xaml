@@ -31,7 +31,7 @@
             <MenuItem Header="File">
                 <MenuItem Header="Open database"/>
                 <MenuItem Header="New database"/>
-                <MenuItem Header="Archive database"/>
+                <MenuItem Header="Archive database" Name="MniFileArchive" Click="MniFileArchive_OnClick"/>
                 <MenuItem Header="Exit"/>
             </MenuItem>
             <MenuItem Header="TDL">

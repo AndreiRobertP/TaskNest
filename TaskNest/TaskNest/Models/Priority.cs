@@ -1,5 +1,8 @@
-﻿namespace TaskNest.Models
+﻿using System;
+
+namespace TaskNest.Models
 {
+    [Serializable]
     public enum EPriority
     {
         Low,

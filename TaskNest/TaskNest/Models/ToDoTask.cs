@@ -1,12 +1,15 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Xml.Serialization;
 
 namespace TaskNest.Models
 {
+    [Serializable]
     public class ToDoTask: INotifyPropertyChanged
     {
         private string _name;
+        [XmlAttribute]
         public string Name {
             get => _name;
             set
@@ -17,7 +20,7 @@ namespace TaskNest.Models
         }
 
         private string _description;
-
+        [XmlAttribute]
         public string Description
         {
             get => _description;
@@ -29,6 +32,7 @@ namespace TaskNest.Models
         }
 
         private EPriority _priority;
+        [XmlAttribute]
         public EPriority Priority
         {
             get => _priority;
@@ -40,6 +44,7 @@ namespace TaskNest.Models
         }
 
         private string _category;
+        [XmlAttribute]
         public string Category
         {
             get => _category;
@@ -51,7 +56,7 @@ namespace TaskNest.Models
         }
 
         private DateTime _dueDateTime;
-
+        [XmlAttribute]
         public DateTime DueDateTime
         {
             get => _dueDateTime;
@@ -64,8 +69,8 @@ namespace TaskNest.Models
 
         public string DueDate => DueDateTime.ToString("d/M/yy");
 
-
         private bool _isDone;
+        [XmlAttribute]
         public bool IsDone
         {
             get => _isDone;
@@ -86,7 +91,10 @@ namespace TaskNest.Models
             IsDone = isDone;
         }
 
-
+        public ToDoTask()
+        {
+            
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")

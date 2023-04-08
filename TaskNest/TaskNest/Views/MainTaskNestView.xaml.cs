@@ -172,5 +172,10 @@ namespace TaskNest
             ListChangePathView listChangePathView = new ListChangePathView(Mvvm.Db, Mvvm.CurrentToDoList);
             listChangePathView.ShowDialog();
         }
+
+        private void MniFileArchive_OnClick(object sender, RoutedEventArgs e)
+        {
+            ToDoDatabaseService.SerializeDatabase(Mvvm.Db);
+        }
     }
 }

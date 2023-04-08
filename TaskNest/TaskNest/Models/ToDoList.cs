@@ -2,12 +2,15 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Xml.Serialization;
 
 namespace TaskNest.Models
 {
+    [Serializable]
     public class ToDoList : IToDoListNode, INotifyPropertyChanged
     {
         private string _name;
+        [XmlAttribute]
         public string Name
         {
             get => _name;
@@ -19,6 +22,7 @@ namespace TaskNest.Models
         }
 
         private int _iconId;
+        [XmlAttribute]
         public int IconId
         {
             get => _iconId;
@@ -32,6 +36,7 @@ namespace TaskNest.Models
 
 
         private BindingList<ToDoTask> _tasks;
+        [XmlArray]
         public BindingList<ToDoTask> Tasks
         {
             get => _tasks;
@@ -42,7 +47,9 @@ namespace TaskNest.Models
             }
         }
 
+
         private BindingList<ToDoList> _subTasks;
+        [XmlArray]
         public BindingList<ToDoList> SubLists
         {
             get => _subTasks;
@@ -54,6 +61,7 @@ namespace TaskNest.Models
         }
 
         private IToDoListNode _parent;
+        [XmlIgnore]
         public IToDoListNode Parent { get => _parent;
             set
             {
@@ -69,6 +77,11 @@ namespace TaskNest.Models
             Tasks = new BindingList<ToDoTask>();
             SubLists = new BindingList<ToDoList>();
             Parent = parent;
+        }
+
+        public ToDoList()
+        {
+            
         }
 
         public ObservableCollection<ToDoList> GetToDoListsSubtree()
