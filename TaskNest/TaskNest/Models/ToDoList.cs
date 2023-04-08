@@ -141,6 +141,11 @@ namespace TaskNest.Models
             return result;
         }
 
+        public BindingList<ToDoList> GetDirectDescendentsSublists()
+        {
+            return SubLists;
+        }
+
 
         public void AddSublist(ToDoList list)
         {

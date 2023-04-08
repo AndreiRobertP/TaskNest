@@ -174,5 +174,11 @@ namespace TaskNest
         {
             ToDoDatabaseService.SerializeDatabase(Mvvm.Db);
         }
+
+        private void MniFileOpen_OnClick(object sender, RoutedEventArgs e)
+        {
+            ToDoDatabaseService.DeserializeObject(Mvvm.Db);
+            Mvvm.NotifyPropertyChangedLists();
+        }
     }
 }

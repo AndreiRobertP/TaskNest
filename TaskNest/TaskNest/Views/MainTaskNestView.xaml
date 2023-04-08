@@ -29,7 +29,7 @@
         <!-- MENU -->
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <MenuItem Header="File">
-                <MenuItem Header="Open database"/>
+                <MenuItem Header="Open database" Name="MniFileOpen" Click="MniFileOpen_OnClick"/>
                 <MenuItem Header="New database"/>
                 <MenuItem Header="Archive database" Name="MniFileArchive" Click="MniFileArchive_OnClick"/>
                 <MenuItem Header="Exit"/>
@@ -97,7 +97,7 @@
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0">Viewing to do list.</Label>
-            <DataGrid Grid.Row="1" Name="DtgTasks" ItemsSource="{Binding Tasks}" AutoGenerateColumns="False" SelectedCellsChanged="DtgTasks_OnSelectedCellsChanged" SelectionMode="Single" AlternatingRowBackground="FloralWhite" CanUserSortColumns="False">
+            <DataGrid Grid.Row="1" Name="DtgTasks" ItemsSource="{Binding Tasks}" AutoGenerateColumns="False" CanUserAddRows="False" SelectedCellsChanged="DtgTasks_OnSelectedCellsChanged" SelectionMode="Single" AlternatingRowBackground="FloralWhite" CanUserSortColumns="False">
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn IsReadOnly="True" Binding="{Binding IsDone}"/>
                     <DataGridTextColumn Header="Task name" Width="*" IsReadOnly="True" Binding="{Binding Name}"/>
