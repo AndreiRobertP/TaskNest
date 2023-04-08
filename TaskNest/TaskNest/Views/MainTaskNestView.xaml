@@ -38,10 +38,10 @@
                 <MenuItem Header="Add root TDL" Name="MniTdlRootAdd" Click="MniTdlRootAdd_OnClick"/>
                 <MenuItem Header="Add sub-TDL" Name="MniTdlSubAdd" Click="MniTdlSubAdd_OnClick"/>
                 <MenuItem Header="Edit" Name="MniTdlEdit" Click="MniTdlEdit_OnClick"/>
-                <MenuItem Header="Delete" Name="MniTdlDelete"/>
+                <MenuItem Header="Delete" Name="MniTdlDelete" Click="MniTdlDelete_OnClick"/>
                 <MenuItem Header="Move Up" Name="MniTdlMoveUp"/>
                 <MenuItem Header="Move Down" Name="MniTdlMoveDown"/>
-                <MenuItem Header="Change Path" Name="MniTdlChangePath"/>
+                <MenuItem Header="Change Path" Name="MniTdlChangePath" Click="MniTdlChangePath_OnClick"/>
             </MenuItem>
             <MenuItem Header="Task">
                 <MenuItem Header="Add" Name="MniTaskAdd" Click="MniTaskAdd_OnClick"/>

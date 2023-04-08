@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 using TaskNest.Models;
 using TaskNest.Services;
 using TaskNest.ViewModels;
@@ -25,6 +27,7 @@ namespace TaskNest
         private void TvwMenu_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             Mvvm.CurrentToDoList = e.NewValue as ToDoList;
+
         }
 
         private void DtgTasks_OnSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
@@ -144,6 +147,30 @@ namespace TaskNest
 
             ListEditView listEditView = new ListEditView(Mvvm.CurrentToDoList, Mvvm.Db.GetToDoListsSubtree(), Mvvm.CurrentToDoList);
             listEditView.ShowDialog();
+        }
+
+        private void MniTdlDelete_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (Mvvm.CurrentToDoList == null)
+                return;
+
+            var responseSure = MessageBox.Show(
+                "Are you sure you want to delete this list? This will delete all the nested lists inside with their respective tasks. This action can't be undone.",
+                "Are you sure?", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+            if (responseSure == MessageBoxResult.Cancel)
+                return;
+
+            ToDoListService.RemoveList(Mvvm.CurrentToDoList);
+            Mvvm.NotifyPropertyChangedStatistics();
+        }
+
+        private void MniTdlChangePath_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (Mvvm.CurrentToDoList == null)
+                return;
+
+            ListChangePathView listChangePathView = new ListChangePathView(Mvvm.Db, Mvvm.CurrentToDoList);
+            listChangePathView.ShowDialog();
         }
     }
 }

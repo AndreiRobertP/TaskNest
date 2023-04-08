@@ -43,7 +43,6 @@ namespace TaskNest.Models
         }
 
         private BindingList<ToDoList> _subTasks;
-
         public BindingList<ToDoList> SubLists
         {
             get => _subTasks;
@@ -54,12 +53,22 @@ namespace TaskNest.Models
             }
         }
 
-        public ToDoList(string name, int iconId)
+        private IToDoListNode _parent;
+        public IToDoListNode Parent { get => _parent;
+            set
+            {
+                _parent = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public ToDoList(string name, int iconId, IToDoListNode parent)
         {
             Name = name;
             IconId = iconId;
             Tasks = new BindingList<ToDoTask>();
             SubLists = new BindingList<ToDoList>();
+            Parent = parent;
         }
 
         public ObservableCollection<ToDoList> GetToDoListsSubtree()
@@ -135,6 +144,11 @@ namespace TaskNest.Models
         public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 

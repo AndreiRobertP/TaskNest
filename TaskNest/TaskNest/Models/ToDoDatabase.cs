@@ -102,5 +102,10 @@ namespace TaskNest.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public override string ToString()
+        {
+            return "_Root";
+        }
     }
 }

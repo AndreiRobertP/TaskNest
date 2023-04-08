@@ -32,14 +32,39 @@ namespace TaskNest.Services
             }
             else
             {
-                var newList = new ToDoList(name, iconId);
+                var newList = new ToDoList(name, iconId, parent);
                 parent.AddSublist(newList);
             }
         }
 
-        public static void RemoveList(IToDoListNode parent, ToDoList oldList)
+        public static void RemoveList(ToDoList listToRemove)
         {
-            
+            IToDoListNode parent = listToRemove.Parent;
+            parent.RemoveSublist(listToRemove);
+            listToRemove.Parent = null;
+        }
+
+        public static void ChangePath(ToDoList listToMove, IToDoListNode newParent)
+        {
+            if(listToMove.Parent == newParent)
+                return;
+
+            listToMove.Parent.RemoveSublist(listToMove);
+            newParent.AddSublist(listToMove);
+            listToMove.Parent = newParent;
+        }
+
+        public static bool IsDescendentOf(ToDoList listToCheck, IToDoListNode expectedParent)
+        {
+            var parent = listToCheck.Parent as ToDoList;
+            while (parent != null)
+            {
+                if (parent == expectedParent)
+                    return true;
+                parent = parent.Parent as ToDoList;
+            }
+
+            return false;
         }
     }
 }

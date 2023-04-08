@@ -32,6 +32,8 @@ namespace TaskNest.ViewModels
                 return CurrentToDoList.Tasks;
             }
         }
+        public IToDoListNode CurrentNodeParent => CurrentToDoList.Parent;
+
 
         // Current Task
         private ToDoTask _currentToDoTask;
@@ -73,24 +75,24 @@ namespace TaskNest.ViewModels
         {
             Db = new ToDoDatabase();
 
-            var td1 = new ToDoList("RC", 2);
-            var td2 = new ToDoList("MVP", 2);
-            var td3 = new ToDoList("Home", 1);
+            var td1 = new ToDoList("RC", 2, Db);
+            var td2 = new ToDoList("MVP", 2, Db);
+            var td3 = new ToDoList("Home", 1, Db);
 
             Db.RootLists.Add(td1);
             Db.RootLists.Add(td2);
 
-            var std1 = new ToDoList("Token Ring Homework", 2);
-            std1.SubLists.Add(new ToDoList("Research", 2));
-            std1.SubLists.Add(new ToDoList("Implement", 2));
-            std1.SubLists.Add(new ToDoList("Present", 2));
+            var std1 = new ToDoList("Token Ring Homework", 2, td1);
+            std1.SubLists.Add(new ToDoList("Research", 2, std1));
+            std1.SubLists.Add(new ToDoList("Implement", 2, std1));
+            std1.SubLists.Add(new ToDoList("Present", 2, std1));
 
             td1.SubLists.Add(std1);
-            td1.SubLists.Add(new ToDoList("Review IPv4", 2));
+            td1.SubLists.Add(new ToDoList("Review IPv4", 2, td1));
 
-            td2.SubLists.Add(new ToDoList("Homework 2", 2));
+            td2.SubLists.Add(new ToDoList("Homework 2", 2, td2));
 
-            td3.SubLists.Add(new ToDoList("Clean", 1));
+            td3.SubLists.Add(new ToDoList("Clean", 1, td3));
             td3.Tasks.Add(new ToDoTask("Clean bedroom", ":)", EPriority.Low, "Work", DateTime.Today));
             td3.Tasks.Add(new ToDoTask("Clean kitchen", "Don't forget about refrigerator", EPriority.High, "Work", DateTime.Today));
             td3.Tasks.Add(new ToDoTask("Do the dishes", "Check if there is any Fairy left", EPriority.High, "Work", DateTime.Today));
