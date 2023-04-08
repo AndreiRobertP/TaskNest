@@ -63,6 +63,7 @@
     <Compile Include="ViewModels\CategoriesManageVM.cs" />
     <Compile Include="ViewModels\ListChangePathVM.cs" />
     <Compile Include="ViewModels\ListEditVM.cs" />
+    <Compile Include="ViewModels\StatisticsVM.cs" />
     <Compile Include="ViewModels\TaskEditVM.cs" />
     <Compile Include="ViewModels\TaskSearchVM.cs" />
     <Compile Include="Views\CategoriesManageView.xaml.cs">

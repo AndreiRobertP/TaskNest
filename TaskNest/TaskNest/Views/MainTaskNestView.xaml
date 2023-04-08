@@ -66,12 +66,12 @@
 
             <!-- STATS -->
             <StackPanel Name="StpStats"  Background="GhostWhite" Margin="5" DockPanel.Dock="Bottom">
-                <Label Content="{Binding StDueToday}"/>
-                <Label Content="{Binding StDueTomorrow}"/>
-                <Label Content="{Binding StDueOverdue}"/>
+                <Label Content="{Binding StatsVM.StDueToday}"/>
+                <Label Content="{Binding StatsVM.StDueTomorrow}"/>
+                <Label Content="{Binding StatsVM.StDueOverdue}"/>
                 <Separator/>
-                <Label Content="{Binding StDone}"/>
-                <Label Content="{Binding StNotDone}"/>
+                <Label Content="{Binding StatsVM.StDone}"/>
+                <Label Content="{Binding StatsVM.StNotDone}"/>
             </StackPanel>
 
             <!-- TREEVIEW -->

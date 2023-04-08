@@ -60,16 +60,11 @@ namespace TaskNest.ViewModels
         // TreeView Navigation Content
         public BindingList<ToDoList> ToDoLists => Db.RootLists;
 
-
-        // Stats
-        public string StDueToday => $"Tasks due today: {Db.GetNumSubTasksByPredicate((tsk) => !tsk.IsDone && tsk.DueDateTime.Date == DateTime.Today.Date)}";
-        public string StDueTomorrow => $"Tasks due tomorrow: {Db.GetNumSubTasksByPredicate((tsk) => !tsk.IsDone && tsk.DueDateTime.Date == DateTime.Today.Date + TimeSpan.FromDays(1))}";
-        public string StDueOverdue => $"Tasks overdue: {Db.GetNumSubTasksByPredicate((tsk) => !tsk.IsDone && tsk.DueDateTime.Date < DateTime.Today.Date)}";
-        public string StDone => $"Tasks done: {Db.GetNumSubTasksByPredicate((tsk) => tsk.IsDone)}";
-        public string StNotDone => $"Tasks to be done: {Db.GetNumSubTasksByPredicate((tsk) => !tsk.IsDone)}";
-
         //Extra
         public ObservableCollection<ToDoTask> AllTasks => Db.GetToDoTasksSubtree();
+
+        //Statistics
+        public StatisticsVM StatsVM { get; set; }
 
         public MainWindowVm()
         {
@@ -98,8 +93,8 @@ namespace TaskNest.ViewModels
             td3.Tasks.Add(new ToDoTask("Do the dishes", "Check if there is any Fairy left", EPriority.High, "Work", DateTime.Today));
             Db.RootLists.Add(td3);
 
-
-            Categories.LoadCats(new List<string>(){"", "Home", "Work", "School"});
+            Db.Categories.LoadCats(new List<string>() { "", "Home", "Work", "School" });
+            StatsVM = new StatisticsVM(Db);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -109,25 +104,21 @@ namespace TaskNest.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void NotifyPropertyChangedStatistics()
-        {
-            NotifyPropertyChanged("StDueToday");
-            NotifyPropertyChanged("StDueTomorrow");
-            NotifyPropertyChanged("StDueOverdue");
-            NotifyPropertyChanged("StDone");
-            NotifyPropertyChanged("StNotDone");
-        }
-
         public void NotifyPropertyChangedTasks()
         {
             NotifyPropertyChanged("Tasks");
-            NotifyPropertyChangedStatistics();
+            StatsVM.NotifyPropertyChangedStatistics();
         }
 
         public void NotifyPropertyChangedLists()
         {
             NotifyPropertyChanged("ToDoLists");
             NotifyPropertyChangedTasks();
+        }
+
+        public void NotifyPropertyChangedStatistics()
+        {
+            StatsVM.NotifyPropertyChangedStatistics();
         }
     }
 }

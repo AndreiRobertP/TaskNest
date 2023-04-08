@@ -25,10 +25,10 @@ namespace TaskNest.Views
     {
         public TaskEditVM Tevm { get; set; }
 
-        public TaskEditView(ObservableCollection<ToDoTask> listOfTasks, ToDoList parent, ToDoTask originalTask = null)
+        public TaskEditView(ObservableCollection<ToDoTask> listOfTasks, Categories categories, ToDoList parent, ToDoTask originalTask = null)
         {
             InitializeComponent();
-            Tevm = new TaskEditVM(listOfTasks, parent, originalTask);
+            Tevm = new TaskEditVM(listOfTasks, categories, parent, originalTask);
             DataContext = Tevm;
 
             CmbCategory.ItemsSource = Tevm.AvaliableCategories;
@@ -59,7 +59,7 @@ namespace TaskNest.Views
 
         private void CmbCategory_OnLoaded(object sender, RoutedEventArgs e)
         {
-            CmbCategory.SelectedIndex = Categories.GetCategoryIndex(Tevm.CurrentTask.Category);
+            CmbCategory.SelectedIndex = Tevm.Categories.GetCategoryIndex(Tevm.CurrentTask.Category);
         }
 
         private void CmbPriority_OnLoaded(object sender, RoutedEventArgs e)

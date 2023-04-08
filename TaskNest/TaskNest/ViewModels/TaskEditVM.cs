@@ -15,11 +15,13 @@ namespace TaskNest.ViewModels
         public ToDoTask OriginalTask { get; set; }
         public ToDoTask CurrentTask { get; set; }
         public ToDoList ParentList { get; set; }
+        public Categories Categories { get; set; }
         public ObservableCollection<string> AvaliableCategories => Categories.Cats;
 
-        public TaskEditVM(ObservableCollection<ToDoTask> listOfTasks, ToDoList parent, ToDoTask originalTask)
+        public TaskEditVM(ObservableCollection<ToDoTask> listOfTasks, Categories categories, ToDoList parent, ToDoTask originalTask)
         {
             ListOfTasks = listOfTasks;
+            Categories = categories;
             ParentList = parent;
             OriginalTask = originalTask;
             CurrentTask = new ToDoTask("", "", EPriority.Low, "", DateTime.Today);

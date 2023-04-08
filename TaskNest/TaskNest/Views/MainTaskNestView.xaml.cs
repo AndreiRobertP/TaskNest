@@ -46,7 +46,7 @@ namespace TaskNest
             if (Mvvm.CurrentToDoList == null)
                 return;
 
-            TaskEditView editWindow = new TaskEditView(Mvvm.AllTasks, Mvvm.CurrentToDoList);
+            TaskEditView editWindow = new TaskEditView(Mvvm.AllTasks, Mvvm.Db.Categories, Mvvm.CurrentToDoList);
             var result = editWindow.ShowDialog();
             if (result.HasValue && result.Value)
             {
@@ -62,7 +62,7 @@ namespace TaskNest
             if (Mvvm.CurrentToDoTask == null)
                 return;
 
-            TaskEditView editWindow = new TaskEditView(Mvvm.AllTasks, Mvvm.CurrentToDoList, Mvvm.CurrentToDoTask);
+            TaskEditView editWindow = new TaskEditView(Mvvm.AllTasks, Mvvm.Db.Categories, Mvvm.CurrentToDoList, Mvvm.CurrentToDoTask);
             var result = editWindow.ShowDialog();
             if (result.HasValue && result.Value)
             {

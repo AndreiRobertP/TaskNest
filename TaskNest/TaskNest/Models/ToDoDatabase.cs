@@ -20,9 +20,19 @@ namespace TaskNest.Models
             }
         }
 
+        private Categories _categories;
+        public Categories Categories { get => _categories;
+            set
+            {
+                _categories = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public ToDoDatabase()
         {
             RootLists = new BindingList<ToDoList>();
+            Categories = new Categories();
         }
 
         public ObservableCollection<ToDoList> GetToDoListsSubtree()

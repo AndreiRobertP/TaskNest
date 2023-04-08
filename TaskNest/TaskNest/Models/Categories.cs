@@ -6,9 +6,9 @@ namespace TaskNest.Models
 {
     public class Categories
     {
-        public static ObservableCollection<string> Cats { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<string> Cats { get; set; } = new ObservableCollection<string>();
 
-        public static int GetCategoryIndex(string cat)
+        public int GetCategoryIndex(string cat)
         {
             for (int i = 0; i < Cats.Count; i++)
             {
@@ -19,7 +19,7 @@ namespace TaskNest.Models
             return 0;
         }
 
-        public static void LoadCats(List<string> categories)
+        public void LoadCats(List<string> categories)
         {
             Cats.Clear();
             foreach (var cat in categories)
@@ -28,7 +28,7 @@ namespace TaskNest.Models
             }
         }
 
-        public static bool CheckCategoryExists(string cat)
+        public bool CheckCategoryExists(string cat)
         {
             foreach (var c in Cats)
             {
@@ -39,12 +39,12 @@ namespace TaskNest.Models
             return false;
         }
 
-        public static void AddNewCat(string cat)
+        public void AddNewCat(string cat)
         {
             Cats.Add(cat);
         }
 
-        public static void DeleteCat(string cat)
+        public  void DeleteCat(string cat)
         {
             var foundAt = GetCategoryIndex(cat);
             if(foundAt == -1)
@@ -52,12 +52,12 @@ namespace TaskNest.Models
             Cats.RemoveAt(foundAt);
         }
 
-        public static bool IsJustDefaultCategory()
+        public bool IsJustDefaultCategory()
         {
             return Cats.Count == 1;
         }
 
-        public static void UpdateCategoryName(string oldName, string newName)
+        public void UpdateCategoryName(string oldName, string newName)
         {
             var index = GetCategoryIndex(oldName);
             Cats[index] = String.Copy(newName);
