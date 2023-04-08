@@ -1,27 +1,65 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Documents;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace TaskNest.Models
 {
-    public class ToDoList : IToDoListNode
+    public class ToDoList : IToDoListNode, INotifyPropertyChanged
     {
-        public string Name { get; set; }
-        public int IconId { get; set; }
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private int _iconId;
+        public int IconId
+        {
+            get => _iconId;
+            set
+            {
+                _iconId = value;
+                NotifyPropertyChanged();
+            }
+        }
         public string IconUriStr => $"/Icons/{IconId}.png" ;
-        public ObservableCollection<ToDoTask> Tasks { get; set; }
-        public ObservableCollection<ToDoList> SubLists { get; set; }
+
+
+        private BindingList<ToDoTask> _tasks;
+        public BindingList<ToDoTask> Tasks
+        {
+            get => _tasks;
+            set
+            {
+                _tasks = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private BindingList<ToDoList> _subTasks;
+
+        public BindingList<ToDoList> SubLists
+        {
+            get => _subTasks;
+            set
+            {
+                _subTasks = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         public ToDoList(string name, int iconId)
         {
             Name = name;
             IconId = iconId;
-            Tasks = new ObservableCollection<ToDoTask>();
-            SubLists = new ObservableCollection<ToDoList>();
+            Tasks = new BindingList<ToDoTask>();
+            SubLists = new BindingList<ToDoList>();
         }
 
         public ObservableCollection<ToDoList> GetToDoListsSubtree()
@@ -90,6 +128,13 @@ namespace TaskNest.Models
         public void RemoveSublist(ToDoList list)
         {
             SubLists.Remove(list);
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 

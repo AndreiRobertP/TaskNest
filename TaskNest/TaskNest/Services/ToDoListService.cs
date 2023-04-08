@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using TaskNest.Models;
 
 namespace TaskNest.Services
@@ -14,8 +9,15 @@ namespace TaskNest.Services
         {
             foreach (var list in allLists)
             {
-                if (list.Name.Equals(name) && !oldList.Name.Equals(name))
-                    return false;
+                if (list.Name.Equals(name))
+                {
+                    if(oldList == null)
+                        return false;
+                    if (!oldList.Name.Equals(name))
+                    {
+                        return false;
+                    }
+                }
             }
 
             return true;
@@ -23,14 +25,14 @@ namespace TaskNest.Services
 
         public static void AddListToList(IToDoListNode parent, string name, int iconId, ToDoList oldList)
         {
-            var newList = new ToDoList(name, iconId);
-
             if (oldList != null)
             {
-                oldList = newList;
+                oldList.Name = name;
+                oldList.IconId = iconId;
             }
             else
             {
+                var newList = new ToDoList(name, iconId);
                 parent.AddSublist(newList);
             }
         }

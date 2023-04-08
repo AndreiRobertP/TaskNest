@@ -144,8 +144,6 @@ namespace TaskNest
 
             ListEditView listEditView = new ListEditView(Mvvm.CurrentToDoList, Mvvm.Db.GetToDoListsSubtree(), Mvvm.CurrentToDoList);
             listEditView.ShowDialog();
-
-            Mvvm.NotifyPropertyChangedLists();
         }
     }
 }

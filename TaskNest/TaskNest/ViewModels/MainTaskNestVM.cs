@@ -2,12 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 using TaskNest.Models;
 
 namespace TaskNest.ViewModels
@@ -27,12 +22,12 @@ namespace TaskNest.ViewModels
                 NotifyPropertyChanged("Tasks");
             }
         }
-        public ObservableCollection<ToDoTask> Tasks
+        public BindingList<ToDoTask> Tasks
         {
             get
             {
                 if (CurrentToDoList == null)
-                    return new ObservableCollection<ToDoTask>();
+                    return new BindingList<ToDoTask>();
 
                 return CurrentToDoList.Tasks;
             }
@@ -61,7 +56,7 @@ namespace TaskNest.ViewModels
 
 
         // TreeView Navigation Content
-        public ObservableCollection<ToDoList> ToDoLists => Db.RootLists;
+        public BindingList<ToDoList> ToDoLists => Db.RootLists;
 
 
         // Stats

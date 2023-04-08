@@ -1,17 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace TaskNest.Models
 {
-    public class ToDoDatabase : IToDoListNode
+    public class ToDoDatabase : IToDoListNode, INotifyPropertyChanged
     {
-        public ObservableCollection<ToDoList> RootLists { get; set; }
+
+        private BindingList<ToDoList> _rootLists;
+
+        public BindingList<ToDoList> RootLists
+        {
+            get => _rootLists;
+            set
+            {
+                _rootLists = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public ToDoDatabase()
         {
-            RootLists = new ObservableCollection<ToDoList>();
+            RootLists = new BindingList<ToDoList>();
         }
 
         public ObservableCollection<ToDoList> GetToDoListsSubtree()
@@ -83,6 +94,13 @@ namespace TaskNest.Models
         public void RemoveSublist(ToDoList list)
         {
             RootLists.Remove(list);
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
