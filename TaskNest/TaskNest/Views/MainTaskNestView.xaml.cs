@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Win32;
 using TaskNest.Models;
 using TaskNest.Services;
 using TaskNest.ViewModels;
@@ -172,12 +173,44 @@ namespace TaskNest
 
         private void MniFileArchive_OnClick(object sender, RoutedEventArgs e)
         {
-            ToDoDatabaseService.SerializeDatabase(Mvvm.Db);
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "TaskNest Database Files | *.xml";
+            saveFileDialog.Title = "Choose ToDODatabase";
+
+            var resp = saveFileDialog.ShowDialog();
+            if (!resp.HasValue || resp.Value == false)
+                return;
+
+            ToDoDatabaseService.SerializeDatabase(Mvvm.Db, saveFileDialog.FileName);
         }
 
         private void MniFileOpen_OnClick(object sender, RoutedEventArgs e)
         {
-            ToDoDatabaseService.DeserializeObject(Mvvm.Db);
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "TaskNest Database Files | *.xml";
+            openFileDialog.Title = "Choose ToDoDatabase";
+            openFileDialog.Multiselect = false;
+
+            var resp = openFileDialog.ShowDialog();
+            if (!resp.HasValue || resp.Value == false)
+                return;
+
+            ToDoDatabaseService.DeserializeObject(Mvvm.Db, openFileDialog.FileName);
+            Mvvm.NotifyPropertyChangedLists();
+        }
+
+        private void MniFileNew_OnClick(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "TaskNest Database Files | *.xml";
+            saveFileDialog.Title = "Choose ToDODatabase";
+
+            var resp = saveFileDialog.ShowDialog();
+            if (!resp.HasValue || resp.Value == false)
+                return;
+
+            ToDoDatabaseService.SerializeDatabase(ToDoDatabaseService.GenerateNewDatabase(), saveFileDialog.FileName);
+            ToDoDatabaseService.DeserializeObject(Mvvm.Db, saveFileDialog.FileName);
             Mvvm.NotifyPropertyChangedLists();
         }
     }
