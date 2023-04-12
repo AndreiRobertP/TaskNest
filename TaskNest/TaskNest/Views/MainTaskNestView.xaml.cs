@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Microsoft.Win32;
 using TaskNest.Models;
 using TaskNest.Services;
@@ -212,6 +214,12 @@ namespace TaskNest
             ToDoDatabaseService.SerializeDatabase(ToDoDatabaseService.GenerateNewDatabase(), saveFileDialog.FileName);
             ToDoDatabaseService.DeserializeObject(Mvvm.Db, saveFileDialog.FileName);
             Mvvm.NotifyPropertyChangedLists();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            ToDoDatabaseService.SerializeDatabase(Mvvm.Db, ToDoDatabaseService.GetLastDatabaseFilepath());
+            base.OnClosed(e);
         }
     }
 }

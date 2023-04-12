@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Windows.Documents;
-using System.Windows.Shapes;
 using System.Xml.Serialization;
 using TaskNest.Models;
 
@@ -43,6 +41,8 @@ namespace TaskNest.Services
             db.RootLists = tmp.RootLists;
             TreeParentRestructureList(db);
 
+            SetLastDatabaseFilepath(filename);
+
             return true;
         }
 
@@ -58,7 +58,7 @@ namespace TaskNest.Services
         public static ToDoDatabase GenerateNewDatabase()
         {
             var categories = new Categories();
-            categories.LoadCats(new List<string>(){"None"});
+            categories.LoadCats(new List<string>() { "None" });
 
             var newDb = new ToDoDatabase();
             newDb.Categories = categories;
@@ -68,17 +68,38 @@ namespace TaskNest.Services
 
         public static string GetLastDatabaseFilepath()
         {
-            using (StreamReader reader = File.OpenText("config.txt"))
+            string filename = null;
+
+            try
             {
-                return reader.ReadLine();
+                using (StreamReader reader = File.OpenText("config.txt"))
+                {
+                    filename = reader.ReadLine();
+                }
             }
+            catch (Exception e)
+            {
+                return null;
+            }
+
+            if(File.Exists(filename))
+                return filename;
+            else
+                return null;
         }
 
         public static void SetLastDatabaseFilepath(string filename)
         {
-            using (StreamWriter reader = File.CreateText("config.txt"))
+            try
             {
-                reader.Write(filename);
+                using (StreamWriter reader = File.CreateText("config.txt"))
+                {
+                    reader.Write(filename);
+                }
+            }
+            catch (Exception e)
+            {
+                //Nothing
             }
         }
     }
