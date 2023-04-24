@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using TaskNest.Models;
 using TaskNest.Services;
 
@@ -12,8 +13,12 @@ namespace TaskNest.ViewModels
     {
         public ToDoDatabase Db { get; set; }
 
+        // Filtering criterium
+        public Func<ToDoTask, bool> TaskFilteringCriterium = task => true;
+
         // Current List
         private ToDoList _currentToDoList;
+
         public ToDoList CurrentToDoList
         {
             get => _currentToDoList;
@@ -23,21 +28,32 @@ namespace TaskNest.ViewModels
                 NotifyPropertyChanged("Tasks");
             }
         }
+
         public BindingList<ToDoTask> Tasks
         {
             get
             {
-                if (CurrentToDoList == null)
-                    return new BindingList<ToDoTask>();
+                BindingList<ToDoTask> response = new BindingList<ToDoTask>();
 
-                return CurrentToDoList.Tasks;
+                if (CurrentToDoList == null)
+                    return response;
+
+                foreach (var task in CurrentToDoList.Tasks)
+                {
+                    if(TaskFilteringCriterium(task))
+                        response.Add(task);
+                }
+
+                return response;
             }
         }
+
         public IToDoListNode CurrentNodeParent => CurrentToDoList.Parent;
 
 
         // Current Task
         private ToDoTask _currentToDoTask;
+
         public ToDoTask CurrentToDoTask
         {
             get => _currentToDoTask;
@@ -47,6 +63,7 @@ namespace TaskNest.ViewModels
                 NotifyPropertyChanged("TaskContent");
             }
         }
+
         public string TaskContent
         {
             get
@@ -82,6 +99,10 @@ namespace TaskNest.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public void NotifyPropertyChangedStatistics()
+        {
+            StatsVM.NotifyPropertyChangedStatistics();
+        }
         public void NotifyPropertyChangedTasks()
         {
             NotifyPropertyChanged("Tasks");
@@ -92,11 +113,6 @@ namespace TaskNest.ViewModels
         {
             NotifyPropertyChanged("ToDoLists");
             NotifyPropertyChangedTasks();
-        }
-
-        public void NotifyPropertyChangedStatistics()
-        {
-            StatsVM.NotifyPropertyChangedStatistics();
         }
     }
 }

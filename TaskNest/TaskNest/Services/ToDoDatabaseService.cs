@@ -82,7 +82,7 @@ namespace TaskNest.Services
                 return null;
             }
 
-            if(File.Exists(filename))
+            if (File.Exists(filename))
                 return filename;
             else
                 return null;
@@ -101,6 +101,11 @@ namespace TaskNest.Services
             {
                 //Nothing
             }
+        }
+
+        public static void SaveChangesToCurrentDatabase(ToDoDatabase db)
+        {
+            SerializeDatabase(db, GetLastDatabaseFilepath());
         }
     }
 }

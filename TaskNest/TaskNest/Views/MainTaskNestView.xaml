@@ -14,6 +14,18 @@
         <viewModels:MainWindowVm/>
     </Window.DataContext>
 
+    <Window.CommandBindings>
+        <CommandBinding Command="Open"
+                        Executed="FileOpen_OnExecuted"
+                        CanExecute="Command_CanExecuteAlways" />
+        <CommandBinding Command="SaveAs"
+                        Executed="FileArchive_OnExecuted"
+                        CanExecute="Command_CanExecuteAlways"/>
+        <CommandBinding Command="SaveAs"
+                        Executed="FileSave_OnExecuted"
+                        CanExecute="Command_CanExecuteAlways"/>
+    </Window.CommandBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -27,10 +39,11 @@
         <!-- MENU -->
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <MenuItem Header="File">
-                <MenuItem Header="Open database" Name="MniFileOpen" Click="MniFileOpen_OnClick"/>
-                <MenuItem Header="New database" Name="MniFileNew" Click="MniFileNew_OnClick"/>
-                <MenuItem Header="Archive database" Name="MniFileArchive" Click="MniFileArchive_OnClick"/>
-                <MenuItem Header="Exit"/>
+                <MenuItem Header="Open database" Name="MniFileOpen" Command="Open"/>
+                <MenuItem Header="New database" Name="MniFileNew" Command="SaveAs" Click="MniFileNew_OnClick"/>
+                <MenuItem Header="Archive database" Name="MniFileArchive" Command="SaveAs"/>
+                <MenuItem Header="Save changes" Name="MniFileSave" Command="Save"/>
+                <MenuItem Header="Exit" Name="MniFileExit" Click="MniFileExit_OnClick" />
             </MenuItem>
             <MenuItem Header="TDL">
                 <MenuItem Header="Add root TDL" Name="MniTdlRootAdd" Click="MniTdlRootAdd_OnClick"/>
@@ -52,7 +65,10 @@
                 <MenuItem Header="Find Task" Name="MniTaskFind" Click="MniTaskFind_OnClick"/>
             </MenuItem>
             <MenuItem Header="View">
-                <MenuItem Header="Sort"></MenuItem>
+                <MenuItem Header="Sort">
+                    <MenuItem Header="By Deadline" Name="MniSortDeadline" Click="MniSortDeadline_OnClick" />
+                    <MenuItem Header="By Priority" Name="MniSortPriority" Click="MniSortPriority_OnClick"/>
+                </MenuItem>
                 <MenuItem Header="Filter"></MenuItem>
                 <MenuItem Header="Statistics" Name="MniStatsToggle" IsCheckable="true" IsChecked="True" Click="MniStatsToggle_OnClick"></MenuItem>
             </MenuItem>

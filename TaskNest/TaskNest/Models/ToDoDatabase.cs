@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace TaskNest.Models
@@ -115,12 +116,21 @@ namespace TaskNest.Models
             RootLists.Remove(list);
         }
 
+        public void SortTasksBy(Func<ToDoTask, ToDoTask, bool> predSortByCrit)
+        {
+            foreach (var sublist in RootLists)
+            {
+                sublist.SortTasksBy(predSortByCrit);
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
 
         public override string ToString()
         {

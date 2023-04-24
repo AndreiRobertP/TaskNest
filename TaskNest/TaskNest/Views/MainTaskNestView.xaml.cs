@@ -47,11 +47,8 @@ namespace TaskNest
                 return;
 
             TaskEditView editWindow = new TaskEditView(Mvvm.AllTasks, Mvvm.Db.Categories, Mvvm.CurrentToDoList);
-            var result = editWindow.ShowDialog();
-            if (result.HasValue && result.Value)
-            {
-                Mvvm.NotifyPropertyChangedTasks();
-            }
+            editWindow.ShowDialog();
+            Mvvm.NotifyPropertyChangedTasks();
         }
 
         private void MniTaskEdit_OnClick(object sender, RoutedEventArgs e)
@@ -63,11 +60,8 @@ namespace TaskNest
                 return;
 
             TaskEditView editWindow = new TaskEditView(Mvvm.AllTasks, Mvvm.Db.Categories, Mvvm.CurrentToDoList, Mvvm.CurrentToDoTask);
-            var result = editWindow.ShowDialog();
-            if (result.HasValue && result.Value)
-            {
-                Mvvm.NotifyPropertyChangedTasks();
-            }
+            editWindow.ShowDialog();
+            Mvvm.NotifyPropertyChangedTasks();
         }
 
         private void MniTaskToggle_OnClick(object sender, RoutedEventArgs e)
@@ -173,33 +167,6 @@ namespace TaskNest
             listChangePathView.ShowDialog();
         }
 
-        private void MniFileArchive_OnClick(object sender, RoutedEventArgs e)
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "TaskNest Database Files | *.xml";
-            saveFileDialog.Title = "Choose ToDODatabase";
-
-            var resp = saveFileDialog.ShowDialog();
-            if (!resp.HasValue || resp.Value == false)
-                return;
-
-            ToDoDatabaseService.SerializeDatabase(Mvvm.Db, saveFileDialog.FileName);
-        }
-
-        private void MniFileOpen_OnClick(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "TaskNest Database Files | *.xml";
-            openFileDialog.Title = "Choose ToDoDatabase";
-            openFileDialog.Multiselect = false;
-
-            var resp = openFileDialog.ShowDialog();
-            if (!resp.HasValue || resp.Value == false)
-                return;
-
-            ToDoDatabaseService.DeserializeObject(Mvvm.Db, openFileDialog.FileName);
-            Mvvm.NotifyPropertyChangedLists();
-        }
 
         private void MniFileNew_OnClick(object sender, RoutedEventArgs e)
         {
@@ -218,8 +185,63 @@ namespace TaskNest
 
         protected override void OnClosed(EventArgs e)
         {
-            ToDoDatabaseService.SerializeDatabase(Mvvm.Db, ToDoDatabaseService.GetLastDatabaseFilepath());
+            ToDoDatabaseService.SaveChangesToCurrentDatabase(Mvvm.Db);
             base.OnClosed(e);
+        }
+
+        private void FileOpen_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "TaskNest Database Files | *.xml";
+            openFileDialog.Title = "Choose ToDoDatabase";
+            openFileDialog.Multiselect = false;
+
+            var resp = openFileDialog.ShowDialog();
+            if (!resp.HasValue || resp.Value == false)
+                return;
+
+            ToDoDatabaseService.DeserializeObject(Mvvm.Db, openFileDialog.FileName);
+            Mvvm.NotifyPropertyChangedLists();
+        }
+
+        private void Command_CanExecuteAlways(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void FileArchive_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "TaskNest Database Files | *.xml";
+            saveFileDialog.Title = "Choose ToDODatabase";
+
+            var resp = saveFileDialog.ShowDialog();
+            if (!resp.HasValue || resp.Value == false)
+                return;
+
+            ToDoDatabaseService.SerializeDatabase(Mvvm.Db, saveFileDialog.FileName);
+        }
+
+        private void FileSave_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            ToDoDatabaseService.SaveChangesToCurrentDatabase(Mvvm.Db);
+        }
+
+        private void MniFileExit_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void MniSortDeadline_OnClick(object sender, RoutedEventArgs e)
+        {
+            Mvvm.Db.SortTasksBy((ToDoTask a, ToDoTask b) => a.DueDateTime < b.DueDateTime);
+            Mvvm.NotifyPropertyChangedTasks();
+        }
+
+        private void MniSortPriority_OnClick(object sender, RoutedEventArgs e)
+        {
+            Mvvm.Db.SortTasksBy((ToDoTask a, ToDoTask b) => a.Priority < b.Priority);
+            Mvvm.NotifyPropertyChangedTasks();
         }
     }
 }

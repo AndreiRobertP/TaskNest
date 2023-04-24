@@ -32,7 +32,7 @@ namespace TaskNest.Models
                 NotifyPropertyChanged();
             }
         }
-        public string IconUriStr => $"/Icons/{IconId}.png" ;
+        public string IconUriStr => $"/Icons/{IconId}.png";
 
 
         private BindingList<ToDoTask> _tasks;
@@ -62,7 +62,9 @@ namespace TaskNest.Models
 
         private IToDoListNode _parent;
         [XmlIgnore]
-        public IToDoListNode Parent { get => _parent;
+        public IToDoListNode Parent
+        {
+            get => _parent;
             set
             {
                 _parent = value;
@@ -81,7 +83,7 @@ namespace TaskNest.Models
 
         public ToDoList()
         {
-            
+
         }
 
         public ObservableCollection<ToDoList> GetToDoListsSubtree()
@@ -134,7 +136,7 @@ namespace TaskNest.Models
                 var partialResultsSublist = lst.FindTask(predWhatFind);
                 foreach (var pr in partialResultsSublist)
                 {
-                    result.Add(new TDTSearchResult(pr.Task,  this.Name + " > " + pr.Path));
+                    result.Add(new TDTSearchResult(pr.Task, this.Name + " > " + pr.Path));
                 }
             }
 
@@ -155,6 +157,26 @@ namespace TaskNest.Models
         public void RemoveSublist(ToDoList list)
         {
             SubLists.Remove(list);
+        }
+
+        public void SortTasksBy(Func<ToDoTask, ToDoTask, bool> predSortByCrit)
+        {
+            foreach (var sublist in SubLists)
+            {
+                sublist.SortTasksBy(predSortByCrit);
+            }
+
+            for (int i = 0; i < Tasks.Count; i++)
+            {
+                for (int j = i + 1; j < Tasks.Count; j++)
+                {
+                    if (!predSortByCrit(Tasks[i], Tasks[j]))
+                    {
+                        (Tasks[i], Tasks[j]) = (Tasks[j], Tasks[i]);
+                    }
+                }
+            }
+
         }
 
 
