@@ -363,5 +363,156 @@ namespace TaskNest.ViewModels
                 ));
             }
         }
+
+
+        //================================
+        // COMMANDS FOR TO DO TASKS MANIPULATION
+        //================================
+
+        private RelayCommand _cmdAddTdt;
+        public RelayCommand CmdAddTdt
+        {
+            get
+            {
+                return _cmdAddTdt ?? (_cmdAddTdt = new RelayCommand(
+                    () =>
+                    {
+                        if (CurrentToDoList == null)
+                            return;
+
+                        TaskEditView editWindow = new TaskEditView(AllTasks, Db.Categories, CurrentToDoList);
+                        editWindow.ShowDialog();
+                        NotifyPropertyChangedTasks();
+                    },
+                    //() => CurrentToDoList != null
+                    () => true
+                ));
+            }
+        }
+
+
+        private RelayCommand _cmdEditTdt;
+        public RelayCommand CmdEditTdt
+        {
+            get
+            {
+                return _cmdEditTdt ?? (_cmdEditTdt = new RelayCommand(
+                    () =>
+                    {
+                        if (CurrentToDoList == null)
+                            return;
+
+                        if (CurrentToDoTask == null)
+                            return;
+
+                        TaskEditView editWindow = new TaskEditView(AllTasks, Db.Categories, CurrentToDoList, CurrentToDoTask);
+                        editWindow.ShowDialog();
+                        NotifyPropertyChangedTasks();
+                    },
+                    //() => CurrentToDoList != null && CurrentToDoTask != null
+                    () => true
+                ));
+            }
+        }
+
+
+        private RelayCommand _cmdDeleteTdt;
+        public RelayCommand CmdDeleteTdt
+        {
+            get
+            {
+                return _cmdDeleteTdt ?? (_cmdDeleteTdt = new RelayCommand(
+                    () =>
+                    {
+                        if (CurrentToDoTask == null || CurrentToDoList == null)
+                            return;
+
+                        ToDoTaskService.DeleteTask(CurrentToDoTask, CurrentToDoList);
+                        NotifyPropertyChangedTasks();
+                    },
+                    //() => CurrentToDoList != null && CurrentToDoTask != null
+                    () => true
+                ));
+            }
+        }
+
+
+        private RelayCommand _cmdToggleTdt;
+        public RelayCommand CmdToggleTdt
+        {
+            get
+            {
+                return _cmdToggleTdt ?? (_cmdToggleTdt = new RelayCommand(
+                    () =>
+                    {
+                        if (CurrentToDoTask == null)
+                            return;
+
+                        ToDoTaskService.ToggleTaskDone(CurrentToDoTask);
+                        NotifyPropertyChangedTasks();
+                    },
+                    //() => CurrentToDoTask != null
+                    () => true
+                ));
+            }
+        }
+
+
+        private RelayCommand<bool> _cmdMoveTdt;
+        public RelayCommand<bool> CmdMoveTdt
+        {
+            get
+            {
+                return _cmdMoveTdt ?? (_cmdMoveTdt = new RelayCommand<bool>(
+                    (direction) =>
+                    {
+                        if (CurrentToDoTask == null || CurrentToDoList == null)
+                            return;
+
+                        ToDoTaskService.MoveTask(CurrentToDoTask, CurrentToDoList, direction);
+                        NotifyPropertyChangedTasks();
+                    },
+                    //() => CurrentToDoTask != null && CurrentToDoList != null
+                    (direction) => true
+                ));
+            }
+        }
+
+
+        private RelayCommand _cmdManageCats;
+        public RelayCommand CmdManageCats
+        {
+            get
+            {
+                return _cmdManageCats ?? (_cmdManageCats = new RelayCommand(
+                    () =>
+                    {
+                        CategoriesManageView categoriesManageView = new CategoriesManageView(Db);
+                        categoriesManageView.Show();
+
+                        NotifyPropertyChangedTasks();
+                    },
+                    () => true
+                ));
+            }
+        }
+
+
+        private RelayCommand _cmdFindTdt;
+        public RelayCommand CmdFindTdt
+        {
+            get
+            {
+                return _cmdFindTdt ?? (_cmdFindTdt = new RelayCommand(
+                    () =>
+                    {
+                        TaskSearchView taskSearchView = new TaskSearchView();
+                        taskSearchView.SetDatabase(Db);
+                        taskSearchView.Show();
+                    },
+                    () => true
+                ));
+            }
+        }
     }
 }

@@ -43,14 +43,14 @@
                 <MenuItem Header="Change Path..." Name="MniTdlChangePath" Command="{Binding CmdChangePathTdl}" />
             </MenuItem>
             <MenuItem Header="Task">
-                <MenuItem Header="Add..." Name="MniTaskAdd" Click="MniTaskAdd_OnClick"/>
-                <MenuItem Header="Edit..." Name="MniTaskEdit" Click="MniTaskEdit_OnClick"/>
-                <MenuItem Header="Delete" Name="MniTaskDelete" Click="MniTaskDelete_OnClick"/>
-                <MenuItem Header="Toggle Done" Name="MniTaskToggle" Click="MniTaskToggle_OnClick"/>
-                <MenuItem Header="Move Up" Name="MniTaskMoveUp" Click="MniTaskMoveUp_OnClick"/>
-                <MenuItem Header="Move Down" Name="MniTaskMoveDown" Click="MniTaskMoveDown_OnClick"/>
-                <MenuItem Header="Manage Category..." Name="MniTaskManage" Click="MniTaskManage_OnClick"/>
-                <MenuItem Header="Find Task..." Name="MniTaskFind" Click="MniTaskFind_OnClick"/>
+                <MenuItem Header="Add..." Name="MniTaskAdd" Command="{Binding CmdAddTdt}"/>
+                <MenuItem Header="Edit..." Name="MniTaskEdit" Command="{Binding CmdEditTdt}"/>
+                <MenuItem Header="Delete" Name="MniTaskDelete" Command="{Binding CmdDeleteTdt}"/>
+                <MenuItem Header="Toggle Done" Name="MniTaskToggle" Command="{Binding CmdToggleTdt}"/>
+                <MenuItem Header="Move Up" Name="MniTaskMoveUp" Command="{Binding CmdMoveTdt}" CommandParameter="true"/>
+                <MenuItem Header="Move Down" Name="MniTaskMoveDown" Command="{Binding CmdMoveTdt}" CommandParameter="false"/>
+                <MenuItem Header="Manage Category..." Name="MniTaskManage" Command="{Binding CmdManageCats}"/>
+                <MenuItem Header="Find Task..." Name="MniTaskFind" Command="{Binding CmdFindTdt}"/>
             </MenuItem>
             <MenuItem Header="View">
                 <MenuItem Header="Sort">
