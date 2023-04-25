@@ -9,6 +9,11 @@ namespace TaskNest.Services
     {
         public static bool ValidateToDoList(ObservableCollection<ToDoList> allLists, string name, ToDoList oldList)
         {
+            //Validate name
+
+            if (string.IsNullOrEmpty(name))
+                return false;
+
             foreach (var list in allLists)
             {
                 if (list.Name.Equals(name))

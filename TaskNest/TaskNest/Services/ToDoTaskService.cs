@@ -10,6 +10,10 @@ namespace TaskNest.Services
             ToDoTask originalTask = null)
         {
             //Validate name
+
+            if(string.IsNullOrEmpty(taskToValidate.Name))
+                return false;
+
             foreach (var tsk in allTasks)
             {
                 if (tsk.Name == taskToValidate.Name)
