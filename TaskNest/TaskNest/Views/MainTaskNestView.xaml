@@ -40,7 +40,7 @@
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <MenuItem Header="File">
                 <MenuItem Header="Open database..." Name="MniFileOpen" Command="Open"/>
-                <MenuItem Header="New database..." Name="MniFileNew" Command="SaveAs" Click="MniFileNew_OnClick"/>
+                <MenuItem Header="New database..." Name="MniFileNew" Click="MniFileNew_OnClick"/>
                 <MenuItem Header="Archive database..." Name="MniFileArchive" Command="SaveAs"/>
                 <MenuItem Header="Save changes" Name="MniFileSave" Command="Save"/>
                 <MenuItem Header="Exit" Name="MniFileExit" Click="MniFileExit_OnClick" />
@@ -79,7 +79,9 @@
                 </MenuItem>
                 <MenuItem Header="Statistics" Name="MniStatsToggle" IsCheckable="true" IsChecked="True" Click="MniStatsToggle_OnClick"></MenuItem>
             </MenuItem>
-            <MenuItem Header="Help"/>
+            <MenuItem Header="Help">
+                <MenuItem Header="About" Name="MniAbout" Click="MniAbout_OnClick"/>
+            </MenuItem>
         </Menu>
 
         <!-- LEFT EXPLORER -->

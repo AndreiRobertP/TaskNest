@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Command;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -27,7 +28,6 @@ namespace TaskNest.ViewModels
 
         // Current List
         private ToDoList _currentToDoList;
-
         public ToDoList CurrentToDoList
         {
             get => _currentToDoList;
@@ -56,13 +56,11 @@ namespace TaskNest.ViewModels
                 return response;
             }
         }
-
         public IToDoListNode CurrentNodeParent => CurrentToDoList.Parent;
 
 
         // Current Task
         private ToDoTask _currentToDoTask;
-
         public ToDoTask CurrentToDoTask
         {
             get => _currentToDoTask;
@@ -117,11 +115,25 @@ namespace TaskNest.ViewModels
             NotifyPropertyChanged("Tasks");
             StatsVM.NotifyPropertyChangedStatistics();
         }
-
         public void NotifyPropertyChangedLists()
         {
             NotifyPropertyChanged("ToDoLists");
             NotifyPropertyChangedTasks();
         }
+
+        private RelayCommand _cmdOpenDatabase;
+
+        public RelayCommand CmdOpenDatabase
+        {
+            get
+            {
+                if (_cmdOpenDatabase != null)
+                    return _cmdOpenDatabase;
+
+                _cmdOpenDatabase = new RelayCommand(
+                    () => { }
+                );
+            }
+        } 
     }
 }

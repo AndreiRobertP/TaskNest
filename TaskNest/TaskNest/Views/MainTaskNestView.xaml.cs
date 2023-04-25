@@ -298,5 +298,11 @@ namespace TaskNest
             ToDoListService.MoveList(Mvvm.CurrentToDoList, Mvvm.CurrentToDoList.Parent.GetDirectDescendentsSublists(), false);
             Mvvm.NotifyPropertyChangedLists();
         }
+
+        private void MniAbout_OnClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Popa Andrei Robert" + Environment.NewLine + "10LF313" + Environment.NewLine +
+                            "andrei-robert.popa@student.unitbv.ro");
+        }
     }
 }
