@@ -34,13 +34,13 @@
                 <MenuItem Header="Exit" Name="MniFileExit" Click="MniFileExit_OnClick" />
             </MenuItem>
             <MenuItem Header="TDL">
-                <MenuItem Header="Add root TDL..." Name="MniTdlRootAdd" Click="MniTdlRootAdd_OnClick"/>
-                <MenuItem Header="Add sub-TDL..." Name="MniTdlSubAdd" Click="MniTdlSubAdd_OnClick"/>
-                <MenuItem Header="Edit..." Name="MniTdlEdit" Click="MniTdlEdit_OnClick"/>
-                <MenuItem Header="Delete" Name="MniTdlDelete" Click="MniTdlDelete_OnClick"/>
-                <MenuItem Header="Move Up" Name="MniTdlMoveUp" Click="MniTdlMoveUp_OnClick"/>
-                <MenuItem Header="Move Down" Name="MniTdlMoveDown" Click="MniTdlMoveDown_OnClick"/>
-                <MenuItem Header="Change Path..." Name="MniTdlChangePath" Click="MniTdlChangePath_OnClick"/>
+                <MenuItem Header="Add root TDL..." Name="MniTdlRootAdd" Command="{Binding CmdAddRootTdl}"/>
+                <MenuItem Header="Add sub-TDL..." Name="MniTdlSubAdd" Command="{Binding CmdAddSubTdl}"/>
+                <MenuItem Header="Edit..." Name="MniTdlEdit" Command="{Binding CmdEditTdl}"/>
+                <MenuItem Header="Delete" Name="MniTdlDelete" Command="{Binding CmdDeleteTdl}"/>
+                <MenuItem Header="Move Up" Name="MniTdlMoveUp" Command="{Binding CmdMoveTdl}" CommandParameter="true"/>
+                <MenuItem Header="Move Down" Name="MniTdlMoveDown" Command="{Binding CmdMoveTdl}" CommandParameter="false"/>
+                <MenuItem Header="Change Path..." Name="MniTdlChangePath" Command="{Binding CmdChangePathTdl}" />
             </MenuItem>
             <MenuItem Header="Task">
                 <MenuItem Header="Add..." Name="MniTaskAdd" Click="MniTaskAdd_OnClick"/>

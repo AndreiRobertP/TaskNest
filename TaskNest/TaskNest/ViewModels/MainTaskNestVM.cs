@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 using TaskNest.Models;
 using TaskNest.Services;
+using TaskNest.Views;
 
 namespace TaskNest.ViewModels
 {
@@ -17,6 +19,7 @@ namespace TaskNest.ViewModels
 
         // Filtering criterium
         private Func<ToDoTask, bool> _taskFilteringCriterium = task => true;
+
         public Func<ToDoTask, bool> TaskFilteringCriterium
         {
             get => _taskFilteringCriterium;
@@ -29,6 +32,7 @@ namespace TaskNest.ViewModels
 
         // Current List
         private ToDoList _currentToDoList;
+
         public ToDoList CurrentToDoList
         {
             get => _currentToDoList;
@@ -57,11 +61,13 @@ namespace TaskNest.ViewModels
                 return response;
             }
         }
+
         public IToDoListNode CurrentNodeParent => CurrentToDoList.Parent;
 
 
         // Current Task
         private ToDoTask _currentToDoTask;
+
         public ToDoTask CurrentToDoTask
         {
             get => _currentToDoTask;
@@ -111,11 +117,13 @@ namespace TaskNest.ViewModels
         {
             StatsVM.NotifyPropertyChangedStatistics();
         }
+
         public void NotifyPropertyChangedTasks()
         {
             NotifyPropertyChanged("Tasks");
             StatsVM.NotifyPropertyChangedStatistics();
         }
+
         public void NotifyPropertyChangedLists()
         {
             NotifyPropertyChanged("ToDoLists");
@@ -171,7 +179,8 @@ namespace TaskNest.ViewModels
                         if (!resp.HasValue || resp.Value == false)
                             return;
 
-                        ToDoDatabaseService.SerializeDatabase(ToDoDatabaseService.GenerateNewDatabase(), saveFileDialog.FileName);
+                        ToDoDatabaseService.SerializeDatabase(ToDoDatabaseService.GenerateNewDatabase(),
+                            saveFileDialog.FileName);
                         ToDoDatabaseService.DeserializeObject(Db, saveFileDialog.FileName);
                         NotifyPropertyChangedLists();
                     },
@@ -211,11 +220,146 @@ namespace TaskNest.ViewModels
             get
             {
                 return _cmdSaveDatabase ?? (_cmdSaveDatabase = new RelayCommand(
+                    () => { ToDoDatabaseService.SaveChangesToCurrentDatabase(Db); },
+                    //ToDoDatabaseService.IsSaveDatabasePathValid
+                    () => true
+                ));
+            }
+        }
+
+
+
+        //================================
+        // COMMANDS FOR TO DO LIST MANIPULATION
+        //================================
+
+        private RelayCommand _cmdAddRootTdl;
+        public RelayCommand CmdAddRootTdl
+        {
+            get
+            {
+                return _cmdAddRootTdl ?? (_cmdAddRootTdl = new RelayCommand(
                     () =>
                     {
-                        ToDoDatabaseService.SaveChangesToCurrentDatabase(Db);
+                        ListEditView listEditView = new ListEditView(Db, Db.GetToDoListsSubtree(), null);
+                        listEditView.ShowDialog();
+
+                        NotifyPropertyChangedLists();
                     },
-                    ToDoDatabaseService.IsSaveDatabasePathValid
+                    () => true
+                ));
+            }
+        }
+
+
+        private RelayCommand _cmdAddSubTdl;
+        public RelayCommand CmdAddSubTdl
+        {
+            get
+            {
+                return _cmdAddSubTdl ?? (_cmdAddSubTdl = new RelayCommand(
+                    () =>
+                    {
+                        if (CurrentToDoList == null)
+                            return;
+
+                        ListEditView listEditView = new ListEditView(CurrentToDoList, Db.GetToDoListsSubtree(), null);
+                        listEditView.ShowDialog();
+
+                        NotifyPropertyChangedLists();
+                    },
+                    //() => CurrentToDoList != null
+                    () => true
+                ));
+            }
+        }
+
+
+        private RelayCommand _cmdEditTdl;
+        public RelayCommand CmdEditTdl
+        {
+            get
+            {
+                return _cmdEditTdl ?? (_cmdEditTdl = new RelayCommand(
+                    () =>
+                    {
+                        if (CurrentToDoList == null)
+                            return;
+
+                        ListEditView listEditView = new ListEditView(CurrentToDoList, Db.GetToDoListsSubtree(), CurrentToDoList);
+                        listEditView.ShowDialog();
+                    },
+                    //() => CurrentToDoList != null
+                    () => true
+                ));
+            }
+        }
+
+
+        private RelayCommand _cmdDeleteTdl;
+        public RelayCommand CmdDeleteTdl
+        {
+            get
+            {
+                return _cmdDeleteTdl ?? (_cmdDeleteTdl = new RelayCommand(
+                    () =>
+                    {
+                        if (CurrentToDoList == null)
+                            return;
+
+                        var responseSure = MessageBox.Show(
+                            "Are you sure you want to delete this list? This will delete all the nested lists inside with their respective tasks. This action can't be undone.",
+                            "Are you sure?", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                        if (responseSure == MessageBoxResult.Cancel)
+                            return;
+
+                        ToDoListService.RemoveList(CurrentToDoList);
+                        NotifyPropertyChangedStatistics();
+                    },
+                    //() => CurrentToDoList != null
+                    () => true
+                ));
+            }
+        }
+
+
+        private RelayCommand _cmdChangePathTdl;
+        public RelayCommand CmdChangePathTdl
+        {
+            get
+            {
+                return _cmdChangePathTdl ?? (_cmdChangePathTdl = new RelayCommand(
+                    () =>
+                    {
+                        if (CurrentToDoList == null)
+                            return;
+
+                        ListChangePathView listChangePathView = new ListChangePathView(Db, CurrentToDoList);
+                        listChangePathView.ShowDialog();
+                    },
+                    //() => CurrentToDoList != null
+                    () => true
+                ));
+            }
+        }
+
+
+        private RelayCommand<bool> _cmdMoveTdl;
+        public RelayCommand<bool> CmdMoveTdl
+        {
+            get
+            {
+                return _cmdMoveTdl ?? (_cmdMoveTdl = new RelayCommand<bool>(
+                    (direction) =>
+                    {
+                        if (CurrentToDoList == null)
+                            return;
+
+                        ToDoListService.MoveList(CurrentToDoList, CurrentToDoList.Parent.GetDirectDescendentsSublists(), direction);
+                        NotifyPropertyChangedLists();
+                    },
+                    //() => CurrentToDoList != null
+                    (direction) => true
                 ));
             }
         }

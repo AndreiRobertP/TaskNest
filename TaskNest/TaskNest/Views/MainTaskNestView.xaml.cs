@@ -115,58 +115,6 @@ namespace TaskNest
             Mvvm.NotifyPropertyChangedTasks();
         }
 
-        private void MniTdlRootAdd_OnClick(object sender, RoutedEventArgs e)
-        {
-            ListEditView listEditView = new ListEditView(Mvvm.Db, Mvvm.Db.GetToDoListsSubtree(), null);
-            listEditView.ShowDialog();
-
-            Mvvm.NotifyPropertyChangedLists();
-        }
-
-        private void MniTdlSubAdd_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (Mvvm.CurrentToDoList == null)
-                return;
-
-            ListEditView listEditView = new ListEditView(Mvvm.CurrentToDoList, Mvvm.Db.GetToDoListsSubtree(), null);
-            listEditView.ShowDialog();
-
-            Mvvm.NotifyPropertyChangedLists();
-        }
-
-        private void MniTdlEdit_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (Mvvm.CurrentToDoList == null)
-                return;
-
-            ListEditView listEditView = new ListEditView(Mvvm.CurrentToDoList, Mvvm.Db.GetToDoListsSubtree(), Mvvm.CurrentToDoList);
-            listEditView.ShowDialog();
-        }
-
-        private void MniTdlDelete_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (Mvvm.CurrentToDoList == null)
-                return;
-
-            var responseSure = MessageBox.Show(
-                "Are you sure you want to delete this list? This will delete all the nested lists inside with their respective tasks. This action can't be undone.",
-                "Are you sure?", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
-            if (responseSure == MessageBoxResult.Cancel)
-                return;
-
-            ToDoListService.RemoveList(Mvvm.CurrentToDoList);
-            Mvvm.NotifyPropertyChangedStatistics();
-        }
-
-        private void MniTdlChangePath_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (Mvvm.CurrentToDoList == null)
-                return;
-
-            ListChangePathView listChangePathView = new ListChangePathView(Mvvm.Db, Mvvm.CurrentToDoList);
-            listChangePathView.ShowDialog();
-        }
-
         protected override void OnClosed(EventArgs e)
         {
             ToDoDatabaseService.SaveChangesToCurrentDatabase(Mvvm.Db);
@@ -225,24 +173,6 @@ namespace TaskNest
         private void MniFilterToBeDone_OnClick(object sender, RoutedEventArgs e)
         {
             Mvvm.TaskFilteringCriterium = task => !task.IsDone && task.DueDateTime >= DateTime.Now;
-        }
-
-        private void MniTdlMoveUp_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (Mvvm.CurrentToDoList == null)
-                return;
-
-            ToDoListService.MoveList(Mvvm.CurrentToDoList, Mvvm.CurrentToDoList.Parent.GetDirectDescendentsSublists(), true);
-            Mvvm.NotifyPropertyChangedLists();
-        }
-
-        private void MniTdlMoveDown_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (Mvvm.CurrentToDoList == null)
-                return;
-
-            ToDoListService.MoveList(Mvvm.CurrentToDoList, Mvvm.CurrentToDoList.Parent.GetDirectDescendentsSublists(), false);
-            Mvvm.NotifyPropertyChangedLists();
         }
 
         private void MniAbout_OnClick(object sender, RoutedEventArgs e)
