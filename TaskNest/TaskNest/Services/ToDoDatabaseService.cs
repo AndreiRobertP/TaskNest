@@ -88,6 +88,24 @@ namespace TaskNest.Services
                 return null;
         }
 
+        public static bool IsSaveDatabasePathValid()
+        {
+            string filename = null;
+            try
+            {
+                using (StreamReader reader = File.OpenText("config.txt"))
+                {
+                    filename = reader.ReadLine();
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+            return filename != null;
+        }
+
         public static void SetLastDatabaseFilepath(string filename)
         {
             try

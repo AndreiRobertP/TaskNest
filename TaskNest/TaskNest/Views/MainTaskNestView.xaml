@@ -14,18 +14,6 @@
         <viewModels:MainWindowVm/>
     </Window.DataContext>
 
-    <Window.CommandBindings>
-        <CommandBinding Command="Open"
-                        Executed="FileOpen_OnExecuted"
-                        CanExecute="Command_CanExecuteAlways" />
-        <CommandBinding Command="SaveAs"
-                        Executed="FileArchive_OnExecuted"
-                        CanExecute="Command_CanExecuteAlways"/>
-        <CommandBinding Command="SaveAs"
-                        Executed="FileSave_OnExecuted"
-                        CanExecute="Command_CanExecuteAlways"/>
-    </Window.CommandBindings>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -39,10 +27,10 @@
         <!-- MENU -->
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <MenuItem Header="File">
-                <MenuItem Header="Open database..." Name="MniFileOpen" Command="Open"/>
-                <MenuItem Header="New database..." Name="MniFileNew" Click="MniFileNew_OnClick"/>
-                <MenuItem Header="Archive database..." Name="MniFileArchive" Command="SaveAs"/>
-                <MenuItem Header="Save changes" Name="MniFileSave" Command="Save"/>
+                <MenuItem Header="Open database..." Name="MniFileOpen" Command="{Binding CmdOpenDatabase}"/>
+                <MenuItem Header="New database..." Name="MniFileNew" Command="{Binding CmdNewDatabase}"/>
+                <MenuItem Header="Archive database..." Name="MniFileArchive" Command="{Binding CmdArchiveDatabase}"/>
+                <MenuItem Header="Save changes" Name="MniFileSave" Command="{Binding CmdSaveDatabase}"/>
                 <MenuItem Header="Exit" Name="MniFileExit" Click="MniFileExit_OnClick" />
             </MenuItem>
             <MenuItem Header="TDL">

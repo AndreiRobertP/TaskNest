@@ -167,64 +167,10 @@ namespace TaskNest
             listChangePathView.ShowDialog();
         }
 
-
-        private void MniFileNew_OnClick(object sender, RoutedEventArgs e)
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "TaskNest Database Files | *.xml";
-            saveFileDialog.Title = "Choose ToDODatabase";
-
-            var resp = saveFileDialog.ShowDialog();
-            if (!resp.HasValue || resp.Value == false)
-                return;
-
-            ToDoDatabaseService.SerializeDatabase(ToDoDatabaseService.GenerateNewDatabase(), saveFileDialog.FileName);
-            ToDoDatabaseService.DeserializeObject(Mvvm.Db, saveFileDialog.FileName);
-            Mvvm.NotifyPropertyChangedLists();
-        }
-
         protected override void OnClosed(EventArgs e)
         {
             ToDoDatabaseService.SaveChangesToCurrentDatabase(Mvvm.Db);
             base.OnClosed(e);
-        }
-
-        private void FileOpen_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "TaskNest Database Files | *.xml";
-            openFileDialog.Title = "Choose ToDoDatabase";
-            openFileDialog.Multiselect = false;
-
-            var resp = openFileDialog.ShowDialog();
-            if (!resp.HasValue || resp.Value == false)
-                return;
-
-            ToDoDatabaseService.DeserializeObject(Mvvm.Db, openFileDialog.FileName);
-            Mvvm.NotifyPropertyChangedLists();
-        }
-
-        private void Command_CanExecuteAlways(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
-
-        private void FileArchive_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "TaskNest Database Files | *.xml";
-            saveFileDialog.Title = "Choose ToDODatabase";
-
-            var resp = saveFileDialog.ShowDialog();
-            if (!resp.HasValue || resp.Value == false)
-                return;
-
-            ToDoDatabaseService.SerializeDatabase(Mvvm.Db, saveFileDialog.FileName);
-        }
-
-        private void FileSave_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            ToDoDatabaseService.SaveChangesToCurrentDatabase(Mvvm.Db);
         }
 
         private void MniFileExit_OnClick(object sender, RoutedEventArgs e)
