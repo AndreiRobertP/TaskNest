@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using Microsoft.Win32;
 using TaskNest.Models;
 using TaskNest.Services;
 using TaskNest.ViewModels;
-using TaskNest.Views;
 
 namespace TaskNest
 {
