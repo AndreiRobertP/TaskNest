@@ -54,16 +54,16 @@
             </MenuItem>
             <MenuItem Header="View">
                 <MenuItem Header="Sort">
-                    <MenuItem Header="By Deadline" Name="MniSortDeadline" Click="MniSortDeadline_OnClick" />
-                    <MenuItem Header="By Priority" Name="MniSortPriority" Click="MniSortPriority_OnClick"/>
+                    <MenuItem Header="By Deadline" Name="MniSortDeadline" Command="{Binding CmdSort}" CommandParameter="deadline"/>
+                    <MenuItem Header="By Priority" Name="MniSortPriority" Command="{Binding CmdSort}" CommandParameter="priority"/>
                 </MenuItem>
                 <MenuItem Header="Filter">
-                    <MenuItem Header="Remove filter" Name="MniFilterClear" Click="MniFilterClear_OnClick"></MenuItem>
-                    <MenuItem Header="Category..." Name="MniFilterCategory" Click="MniFilterCategory_OnClick"></MenuItem>
-                    <MenuItem Header="Tasks Done" Name="MniFilterDone" Click="MniFilterDone_OnClick"></MenuItem>
-                    <MenuItem Header="Tasks Done After Deadline" Name="MniFilterOverdue" Click="MniFilterOverdue_OnClick"></MenuItem>
-                    <MenuItem Header="Tasks Not Done Exceeding Deadline" Name="MniFilterExcDeadline" Click="MniFilterExcDeadline_OnClick"></MenuItem>
-                    <MenuItem Header="Tasks Not Done Before Deadline" Name="MniFilterToBeDone" Click="MniFilterToBeDone_OnClick"></MenuItem>
+                    <MenuItem Header="Remove filter" Name="MniFilterClear" Command="{Binding CmdFilter}" CommandParameter="clear" ></MenuItem>
+                    <MenuItem Header="Category..." Name="MniFilterCategory" Command="{Binding CmdFilter}" CommandParameter="category" ></MenuItem>
+                    <MenuItem Header="Tasks Done" Name="MniFilterDone" Command="{Binding CmdFilter}" CommandParameter="done" ></MenuItem>
+                    <MenuItem Header="Tasks Done After Deadline" Name="MniFilterOverdue" Command="{Binding CmdFilter}" CommandParameter="doneAfterDeadline" ></MenuItem>
+                    <MenuItem Header="Tasks Not Done Exceeding Deadline" Name="MniFilterExcDeadline" Command="{Binding CmdFilter}" CommandParameter="notDoneAfterDeadline" ></MenuItem>
+                    <MenuItem Header="Tasks Not Done Before Deadline" Name="MniFilterToBeDone" Command="{Binding CmdFilter}" CommandParameter="notDoneBeforeDeadline"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Statistics" Name="MniStatsToggle" IsCheckable="true" IsChecked="True" Click="MniStatsToggle_OnClick"></MenuItem>
             </MenuItem>

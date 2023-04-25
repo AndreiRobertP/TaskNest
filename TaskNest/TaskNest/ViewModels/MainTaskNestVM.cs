@@ -514,5 +514,89 @@ namespace TaskNest.ViewModels
                 ));
             }
         }
+
+
+
+        //================================
+        // COMMANDS FOR SORTING AND FILTERING
+        //================================
+
+        private RelayCommand<string> _cmdSort;
+        public RelayCommand<string> CmdSort
+        {
+            get
+            {
+                return _cmdSort ?? (_cmdSort = new RelayCommand<string>(
+                    (criterium) =>
+                    {
+                        switch (criterium)
+                        {
+                            case "deadline":
+                                Db.SortTasksBy((a, b) => a.DueDateTime < b.DueDateTime);
+                                break;
+                            case "priority":
+                                Db.SortTasksBy((a, b) => a.Priority < b.Priority);
+                                break;
+                            default:
+                                throw new ArgumentException(@"Invalid parameter for sorting", criterium);
+                        }
+
+                        NotifyPropertyChangedTasks();
+                    },
+                    (criterium) => true
+                ));
+            }
+        }
+
+        private RelayCommand<string> _cmdFilter;
+        public RelayCommand<string> CmdFilter
+        {
+            get
+            {
+                return _cmdFilter ?? (_cmdFilter = new RelayCommand<string>(
+                    (criterium) =>
+                    {
+                        switch (criterium)
+                        {
+                            case "clear":
+                                TaskFilteringCriterium = task => true;
+                                break;
+                            case "category":
+                                FilterView filterView = new FilterView(Db.Categories);
+                                var response = filterView.ShowDialog();
+
+                                if (!(response.HasValue && response == true))
+                                    return;
+
+                                TaskFilteringCriterium = task => task.Category.Equals(filterView.SelectedCategory);
+                                break;
+                            case "done":
+                                TaskFilteringCriterium = task => task.IsDone;
+                                break;
+                            case "doneAfterDeadline":
+                                TaskFilteringCriterium = task => task.DoneDateTime > task.DueDateTime;
+                                break;
+                            case "doneBeforeDeadline":
+                                TaskFilteringCriterium = task => task.DoneDateTime < task.DueDateTime;
+                                break;
+                            case "notDoneAfterDeadline":
+                                TaskFilteringCriterium = task => !task.IsDone && task.DueDateTime < DateTime.Today;
+                                break;
+                            case "notDoneBeforeDeadline":
+                                TaskFilteringCriterium = task => !task.IsDone && task.DueDateTime >= DateTime.Today;
+                                break;
+
+                            default:
+                                throw new ArgumentException(@"Invalid parameter for sorting", criterium);
+                        }
+
+                        NotifyPropertyChangedTasks();
+                    },
+                    (criterium) => true
+                ));
+            }
+        }
+
+
     }
 }

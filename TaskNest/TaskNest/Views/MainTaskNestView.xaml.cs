@@ -52,55 +52,6 @@ namespace TaskNest
             Close();
         }
 
-        private void MniSortDeadline_OnClick(object sender, RoutedEventArgs e)
-        {
-            Mvvm.Db.SortTasksBy((ToDoTask a, ToDoTask b) => a.DueDateTime < b.DueDateTime);
-            Mvvm.NotifyPropertyChangedTasks();
-        }
-
-        private void MniSortPriority_OnClick(object sender, RoutedEventArgs e)
-        {
-            Mvvm.Db.SortTasksBy((ToDoTask a, ToDoTask b) => a.Priority < b.Priority);
-            Mvvm.NotifyPropertyChangedTasks();
-        }
-
-        private void MniFilterClear_OnClick(object sender, RoutedEventArgs e)
-        {
-            Mvvm.TaskFilteringCriterium = task => true;
-        }
-
-        private void MniFilterCategory_OnClick(object sender, RoutedEventArgs e)
-        {
-            FilterView filterView = new FilterView(Mvvm.Db.Categories);
-            var response = filterView.ShowDialog();
-
-            if (!(response.HasValue && response == true))
-                return;
-
-            Mvvm.TaskFilteringCriterium = task => task.Category.Equals(filterView.SelectedCategory);
-        }
-
-
-        private void MniFilterDone_OnClick(object sender, RoutedEventArgs e)
-        {
-            Mvvm.TaskFilteringCriterium = task => task.IsDone;
-        }
-
-        private void MniFilterOverdue_OnClick(object sender, RoutedEventArgs e)
-        {
-            Mvvm.TaskFilteringCriterium = task => task.DoneDateTime > task.DueDateTime;
-        }
-
-        private void MniFilterExcDeadline_OnClick(object sender, RoutedEventArgs e)
-        {
-            Mvvm.TaskFilteringCriterium = task => !task.IsDone && task.DueDateTime < DateTime.Now;
-        }
-
-        private void MniFilterToBeDone_OnClick(object sender, RoutedEventArgs e)
-        {
-            Mvvm.TaskFilteringCriterium = task => !task.IsDone && task.DueDateTime >= DateTime.Now;
-        }
-
         private void MniAbout_OnClick(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Popa Andrei Robert" + Environment.NewLine + "10LF313" + Environment.NewLine +
