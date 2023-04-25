@@ -69,7 +69,14 @@
                     <MenuItem Header="By Deadline" Name="MniSortDeadline" Click="MniSortDeadline_OnClick" />
                     <MenuItem Header="By Priority" Name="MniSortPriority" Click="MniSortPriority_OnClick"/>
                 </MenuItem>
-                <MenuItem Header="Filter"></MenuItem>
+                <MenuItem Header="Filter">
+                    <MenuItem Header="Remove filter" Name="MniFilterClear" Click="MniFilterClear_OnClick"></MenuItem>
+                    <MenuItem Header="Category..." Name="MniFilterCategory" Click="MniFilterCategory_OnClick"></MenuItem>
+                    <MenuItem Header="Tasks Done" Name="MniFilterDone" Click="MniFilterDone_OnClick"></MenuItem>
+                    <MenuItem Header="Tasks Overdue" Name="MniFilterOverdue" Click="MniFilterOverdue_OnClick"></MenuItem>
+                    <MenuItem Header="Tasks Exceeding Deadline" Name="MniFilterExcDeadline" Click="MniFilterExcDeadline_OnClick"></MenuItem>
+                    <MenuItem Header="Tasks To Be Done" Name="MniFilterToBeDone" Click="MniFilterToBeDone_OnClick"></MenuItem>
+                </MenuItem>
                 <MenuItem Header="Statistics" Name="MniStatsToggle" IsCheckable="true" IsChecked="True" Click="MniStatsToggle_OnClick"></MenuItem>
             </MenuItem>
             <MenuItem Header="Help"/>

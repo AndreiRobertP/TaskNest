@@ -14,7 +14,16 @@ namespace TaskNest.ViewModels
         public ToDoDatabase Db { get; set; }
 
         // Filtering criterium
-        public Func<ToDoTask, bool> TaskFilteringCriterium = task => true;
+        private Func<ToDoTask, bool> _taskFilteringCriterium = task => true;
+        public Func<ToDoTask, bool> TaskFilteringCriterium
+        {
+            get => _taskFilteringCriterium;
+            set
+            {
+                _taskFilteringCriterium = value;
+                NotifyPropertyChangedTasks();
+            }
+        }
 
         // Current List
         private ToDoList _currentToDoList;
