@@ -283,12 +283,20 @@ namespace TaskNest
 
         private void MniTdlMoveUp_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (Mvvm.CurrentToDoList == null)
+                return;
+
+            ToDoListService.MoveList(Mvvm.CurrentToDoList, Mvvm.CurrentToDoList.Parent.GetDirectDescendentsSublists(), true);
+            Mvvm.NotifyPropertyChangedLists();
         }
 
         private void MniTdlMoveDown_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (Mvvm.CurrentToDoList == null)
+                return;
+
+            ToDoListService.MoveList(Mvvm.CurrentToDoList, Mvvm.CurrentToDoList.Parent.GetDirectDescendentsSublists(), false);
+            Mvvm.NotifyPropertyChangedLists();
         }
     }
 }

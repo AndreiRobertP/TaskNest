@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using TaskNest.Models;
 
 namespace TaskNest.Services
@@ -12,7 +13,7 @@ namespace TaskNest.Services
             {
                 if (list.Name.Equals(name))
                 {
-                    if(oldList == null)
+                    if (oldList == null)
                         return false;
                     if (!oldList.Name.Equals(name))
                     {
@@ -47,7 +48,7 @@ namespace TaskNest.Services
 
         public static void ChangePath(ToDoList listToMove, IToDoListNode newParent)
         {
-            if(listToMove.Parent == newParent)
+            if (listToMove.Parent == newParent)
                 return;
 
             listToMove.Parent.RemoveSublist(listToMove);
@@ -66,6 +67,33 @@ namespace TaskNest.Services
             }
 
             return false;
+        }
+
+        public static void MoveList(ToDoList listToMove, BindingList<ToDoList> container, bool moveUp)
+        {
+            var originalElementPosition = container.IndexOf(listToMove);
+
+            if (originalElementPosition == -1)
+                return;
+
+            if (moveUp && originalElementPosition == 0)
+                return;
+
+            if (!moveUp && originalElementPosition == container.Count - 1)
+                return;
+
+            if (moveUp)
+            {
+                var tmp = container[originalElementPosition - 1];
+                container[originalElementPosition - 1] = listToMove;
+                container[originalElementPosition] = tmp;
+            }
+            else
+            {
+                var tmp = container[originalElementPosition + 1];
+                container[originalElementPosition + 1] = listToMove;
+                container[originalElementPosition] = tmp;
+            }
         }
     }
 }
