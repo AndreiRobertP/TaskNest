@@ -33,9 +33,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Name="BtnCatNew" Grid.Column="0" Margin="10" Click="BtnCatNew_OnClick">Add new</Button>
-            <Button Name="BtnCatDel" Grid.Column="1" Margin="10" Click="BtnCatDel_OnClick">Delete</Button>
-            <Button Name="BtnCatRen" Grid.Column="2" Margin="10" Click="BtnCatRen_OnClick">Rename</Button>
+            <Button Name="BtnCatNew" Grid.Column="0" Margin="10" Command="{Binding CmdNew}">Add new</Button>
+            <Button Name="BtnCatDel" Grid.Column="1" Margin="10" Command="{Binding CmdDelete}">Delete</Button>
+            <Button Name="BtnCatRen" Grid.Column="2" Margin="10" Command="{Binding CmdRename}">Rename</Button>
         </Grid>
 
         <ListView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Cats}" SelectedValue="{Binding CurrentCat}"/>
