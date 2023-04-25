@@ -39,30 +39,30 @@
         <!-- MENU -->
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <MenuItem Header="File">
-                <MenuItem Header="Open database" Name="MniFileOpen" Command="Open"/>
-                <MenuItem Header="New database" Name="MniFileNew" Command="SaveAs" Click="MniFileNew_OnClick"/>
-                <MenuItem Header="Archive database" Name="MniFileArchive" Command="SaveAs"/>
+                <MenuItem Header="Open database..." Name="MniFileOpen" Command="Open"/>
+                <MenuItem Header="New database..." Name="MniFileNew" Command="SaveAs" Click="MniFileNew_OnClick"/>
+                <MenuItem Header="Archive database..." Name="MniFileArchive" Command="SaveAs"/>
                 <MenuItem Header="Save changes" Name="MniFileSave" Command="Save"/>
                 <MenuItem Header="Exit" Name="MniFileExit" Click="MniFileExit_OnClick" />
             </MenuItem>
             <MenuItem Header="TDL">
-                <MenuItem Header="Add root TDL" Name="MniTdlRootAdd" Click="MniTdlRootAdd_OnClick"/>
-                <MenuItem Header="Add sub-TDL" Name="MniTdlSubAdd" Click="MniTdlSubAdd_OnClick"/>
-                <MenuItem Header="Edit" Name="MniTdlEdit" Click="MniTdlEdit_OnClick"/>
+                <MenuItem Header="Add root TDL..." Name="MniTdlRootAdd" Click="MniTdlRootAdd_OnClick"/>
+                <MenuItem Header="Add sub-TDL..." Name="MniTdlSubAdd" Click="MniTdlSubAdd_OnClick"/>
+                <MenuItem Header="Edit..." Name="MniTdlEdit" Click="MniTdlEdit_OnClick"/>
                 <MenuItem Header="Delete" Name="MniTdlDelete" Click="MniTdlDelete_OnClick"/>
                 <MenuItem Header="Move Up" Name="MniTdlMoveUp"/>
                 <MenuItem Header="Move Down" Name="MniTdlMoveDown"/>
-                <MenuItem Header="Change Path" Name="MniTdlChangePath" Click="MniTdlChangePath_OnClick"/>
+                <MenuItem Header="Change Path..." Name="MniTdlChangePath" Click="MniTdlChangePath_OnClick"/>
             </MenuItem>
             <MenuItem Header="Task">
-                <MenuItem Header="Add" Name="MniTaskAdd" Click="MniTaskAdd_OnClick"/>
-                <MenuItem Header="Edit" Name="MniTaskEdit" Click="MniTaskEdit_OnClick"/>
+                <MenuItem Header="Add..." Name="MniTaskAdd" Click="MniTaskAdd_OnClick"/>
+                <MenuItem Header="Edit..." Name="MniTaskEdit" Click="MniTaskEdit_OnClick"/>
                 <MenuItem Header="Delete" Name="MniTaskDelete" Click="MniTaskDelete_OnClick"/>
                 <MenuItem Header="Toggle Done" Name="MniTaskToggle" Click="MniTaskToggle_OnClick"/>
                 <MenuItem Header="Move Up" Name="MniTaskMoveUp" Click="MniTaskMoveUp_OnClick"/>
                 <MenuItem Header="Move Down" Name="MniTaskMoveDown" Click="MniTaskMoveDown_OnClick"/>
-                <MenuItem Header="Manage Category" Name="MniTaskManage" Click="MniTaskManage_OnClick"/>
-                <MenuItem Header="Find Task" Name="MniTaskFind" Click="MniTaskFind_OnClick"/>
+                <MenuItem Header="Manage Category..." Name="MniTaskManage" Click="MniTaskManage_OnClick"/>
+                <MenuItem Header="Find Task..." Name="MniTaskFind" Click="MniTaskFind_OnClick"/>
             </MenuItem>
             <MenuItem Header="View">
                 <MenuItem Header="Sort">
@@ -73,9 +73,9 @@
                     <MenuItem Header="Remove filter" Name="MniFilterClear" Click="MniFilterClear_OnClick"></MenuItem>
                     <MenuItem Header="Category..." Name="MniFilterCategory" Click="MniFilterCategory_OnClick"></MenuItem>
                     <MenuItem Header="Tasks Done" Name="MniFilterDone" Click="MniFilterDone_OnClick"></MenuItem>
-                    <MenuItem Header="Tasks Overdue" Name="MniFilterOverdue" Click="MniFilterOverdue_OnClick"></MenuItem>
-                    <MenuItem Header="Tasks Exceeding Deadline" Name="MniFilterExcDeadline" Click="MniFilterExcDeadline_OnClick"></MenuItem>
-                    <MenuItem Header="Tasks To Be Done" Name="MniFilterToBeDone" Click="MniFilterToBeDone_OnClick"></MenuItem>
+                    <MenuItem Header="Tasks Done After Deadline" Name="MniFilterOverdue" Click="MniFilterOverdue_OnClick"></MenuItem>
+                    <MenuItem Header="Tasks Not Done Exceeding Deadline" Name="MniFilterExcDeadline" Click="MniFilterExcDeadline_OnClick"></MenuItem>
+                    <MenuItem Header="Tasks Not Done Before Deadline" Name="MniFilterToBeDone" Click="MniFilterToBeDone_OnClick"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Statistics" Name="MniStatsToggle" IsCheckable="true" IsChecked="True" Click="MniStatsToggle_OnClick"></MenuItem>
             </MenuItem>

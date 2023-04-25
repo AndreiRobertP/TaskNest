@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using TaskNest.Models;
 
 namespace TaskNest.Services
@@ -40,7 +41,10 @@ namespace TaskNest.Services
 
         public static void ToggleTaskDone(ToDoTask taskToToggle)
         {
-            taskToToggle.IsDone = !taskToToggle.IsDone;
+            if (taskToToggle.IsDone)
+                taskToToggle.DoneDateTime = DateTime.MinValue;
+            else
+                taskToToggle.DoneDateTime = DateTime.Today;
         }
 
         public static void MoveTask(ToDoTask taskToMove, ToDoList list, bool moveUp)

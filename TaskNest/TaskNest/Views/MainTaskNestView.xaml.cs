@@ -268,7 +268,7 @@ namespace TaskNest
 
         private void MniFilterOverdue_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            Mvvm.TaskFilteringCriterium = task => task.DoneDateTime > task.DueDateTime;
         }
 
         private void MniFilterExcDeadline_OnClick(object sender, RoutedEventArgs e)
@@ -279,6 +279,16 @@ namespace TaskNest
         private void MniFilterToBeDone_OnClick(object sender, RoutedEventArgs e)
         {
             Mvvm.TaskFilteringCriterium = task => !task.IsDone && task.DueDateTime >= DateTime.Now;
+        }
+
+        private void MniTdlMoveUp_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void MniTdlMoveDown_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

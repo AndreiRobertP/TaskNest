@@ -66,29 +66,39 @@ namespace TaskNest.Models
                 NotifyPropertyChanged();
             }
         }
-
         public string DueDate => DueDateTime.ToString("d/M/yy");
 
-        private bool _isDone;
-        [XmlAttribute]
+        [XmlIgnore]
         public bool IsDone
         {
-            get => _isDone;
+            get => DoneDateTime > DateTime.MinValue;
             set
             {
-                _isDone = value;
+                DoneDateTime = value ? DateTime.Today : DateTime.MinValue;
                 NotifyPropertyChanged();
             }
         }
 
-        public ToDoTask(string name, string description, EPriority priority, string category, DateTime dueDateTime, bool isDone = false)
+        private DateTime _doneDateTime;
+        [XmlAttribute]
+        public DateTime DoneDateTime
+        {
+            get => this._doneDateTime;
+            set
+            {
+                _doneDateTime = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public ToDoTask(string name, string description, EPriority priority, string category, DateTime dueDateTime, DateTime? doneDateTime = null)
         {
             Name = name;
             Description = description;
             Priority = priority;
             Category = category;
             DueDateTime = dueDateTime;
-            IsDone = isDone;
+            DoneDateTime = doneDateTime.HasValue? doneDateTime.Value : DateTime.MinValue;
         }
 
         public ToDoTask()

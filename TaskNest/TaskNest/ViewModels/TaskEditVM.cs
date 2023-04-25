@@ -30,7 +30,7 @@ namespace TaskNest.ViewModels
                     OriginalTask.Priority,
                     Copy(OriginalTask.Category),
                     OriginalTask.DueDateTime,
-                    OriginalTask.IsDone
+                    OriginalTask.DoneDateTime
                 );
             }
         }
