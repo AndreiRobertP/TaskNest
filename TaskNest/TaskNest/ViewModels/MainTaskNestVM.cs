@@ -35,7 +35,7 @@ namespace TaskNest.ViewModels
             set
             {
                 _currentToDoList = value;
-                NotifyPropertyChanged("Tasks");
+                NotifyPropertyChanged(nameof(Tasks));
             }
         }
 
@@ -70,7 +70,7 @@ namespace TaskNest.ViewModels
             set
             {
                 _currentToDoTask = value;
-                NotifyPropertyChanged("TaskContent");
+                NotifyPropertyChanged(nameof(TaskContent));
             }
         }
 
@@ -117,13 +117,13 @@ namespace TaskNest.ViewModels
 
         public void NotifyPropertyChangedTasks()
         {
-            NotifyPropertyChanged("Tasks");
+            NotifyPropertyChanged(nameof(Tasks));
             StatsVM.NotifyPropertyChangedStatistics();
         }
 
         public void NotifyPropertyChangedLists()
         {
-            NotifyPropertyChanged("ToDoLists");
+            NotifyPropertyChanged(nameof(ToDoLists));
             NotifyPropertyChangedTasks();
         }
 

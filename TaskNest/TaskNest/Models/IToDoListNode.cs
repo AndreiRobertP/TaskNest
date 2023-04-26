@@ -14,7 +14,5 @@ namespace TaskNest.Models
         void AddSublist(ToDoList list);
         void RemoveSublist(ToDoList list);
         void SortTasksBy(Func<ToDoTask, ToDoTask, bool> predSortByCrit);
-
-
     }
 }

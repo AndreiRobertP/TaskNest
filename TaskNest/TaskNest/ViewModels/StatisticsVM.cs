@@ -23,11 +23,11 @@ namespace TaskNest.ViewModels
 
         public void NotifyPropertyChangedStatistics()
         {
-            NotifyPropertyChanged("StDueToday");
-            NotifyPropertyChanged("StDueTomorrow");
-            NotifyPropertyChanged("StDueOverdue");
-            NotifyPropertyChanged("StDone");
-            NotifyPropertyChanged("StNotDone");
+            NotifyPropertyChanged(nameof(StDueToday));
+            NotifyPropertyChanged(nameof(StDueTomorrow));
+            NotifyPropertyChanged(nameof(StDueOverdue));
+            NotifyPropertyChanged(nameof(StDone));
+            NotifyPropertyChanged(nameof(StNotDone));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -30,6 +30,7 @@ namespace TaskNest.Models
             {
                 _iconId = value;
                 NotifyPropertyChanged();
+                NotifyPropertyChanged(nameof(IconUriStr));
             }
         }
         public string IconUriStr => $"/Icons/{IconId}.png";
