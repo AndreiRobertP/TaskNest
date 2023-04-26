@@ -26,40 +26,40 @@
 
         <!-- MENU -->
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-            <MenuItem Header="File">
-                <MenuItem Header="Open database..." Name="MniFileOpen" Command="{Binding CmdOpenDatabase}"/>
-                <MenuItem Header="New database..." Name="MniFileNew" Command="{Binding CmdNewDatabase}"/>
-                <MenuItem Header="Archive database..." Name="MniFileArchive" Command="{Binding CmdArchiveDatabase}"/>
-                <MenuItem Header="Save changes" Name="MniFileSave" Command="{Binding CmdSaveDatabase}"/>
-                <MenuItem Header="Exit" Name="MniFileExit" Click="MniFileExit_OnClick" />
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open database..." Name="MniFileOpen" Command="{Binding CmdOpenDatabase}"/>
+                <MenuItem Header="_New database..." Name="MniFileNew" Command="{Binding CmdNewDatabase}"/>
+                <MenuItem Header="_Archive database..." Name="MniFileArchive" Command="{Binding CmdArchiveDatabase}"/>
+                <MenuItem Header="_Save changes" Name="MniFileSave" Command="{Binding CmdSaveDatabase}"/>
+                <MenuItem Header="_Quit" Name="MniFileExit" Click="MniFileExit_OnClick" />
             </MenuItem>
             <MenuItem Header="TDL">
-                <MenuItem Header="Add root TDL..." Name="MniTdlRootAdd" Command="{Binding CmdAddRootTdl}"/>
-                <MenuItem Header="Add sub-TDL..." Name="MniTdlSubAdd" Command="{Binding CmdAddSubTdl}"/>
-                <MenuItem Header="Edit..." Name="MniTdlEdit" Command="{Binding CmdEditTdl}"/>
-                <MenuItem Header="Delete" Name="MniTdlDelete" Command="{Binding CmdDeleteTdl}"/>
-                <MenuItem Header="Move Up" Name="MniTdlMoveUp" Command="{Binding CmdMoveTdl}" CommandParameter="true"/>
-                <MenuItem Header="Move Down" Name="MniTdlMoveDown" Command="{Binding CmdMoveTdl}" CommandParameter="false"/>
-                <MenuItem Header="Change Path..." Name="MniTdlChangePath" Command="{Binding CmdChangePathTdl}" />
+                <MenuItem Header="Add _root TDL..." Name="MniTdlRootAdd" Command="{Binding CmdAddRootTdl}"/>
+                <MenuItem Header="Add _sub-TDL..." Name="MniTdlSubAdd" Command="{Binding CmdAddSubTdl}"/>
+                <MenuItem Header="_Edit..." Name="MniTdlEdit" Command="{Binding CmdEditTdl}"/>
+                <MenuItem Header="_Delete" Name="MniTdlDelete" Command="{Binding CmdDeleteTdl}"/>
+                <MenuItem Header="Move _Up" Name="MniTdlMoveUp" Command="{Binding CmdMoveTdl}" CommandParameter="up"/>
+                <MenuItem Header="Move _Down" Name="MniTdlMoveDown" Command="{Binding CmdMoveTdl}" CommandParameter="down"/>
+                <MenuItem Header="Change _Path..." Name="MniTdlChangePath" Command="{Binding CmdChangePathTdl}" />
             </MenuItem>
             <MenuItem Header="Task">
-                <MenuItem Header="Add..." Name="MniTaskAdd" Command="{Binding CmdAddTdt}"/>
-                <MenuItem Header="Edit..." Name="MniTaskEdit" Command="{Binding CmdEditTdt}"/>
-                <MenuItem Header="Delete" Name="MniTaskDelete" Command="{Binding CmdDeleteTdt}"/>
-                <MenuItem Header="Toggle Done" Name="MniTaskToggle" Command="{Binding CmdToggleTdt}"/>
-                <MenuItem Header="Move Up" Name="MniTaskMoveUp" Command="{Binding CmdMoveTdt}" CommandParameter="true"/>
-                <MenuItem Header="Move Down" Name="MniTaskMoveDown" Command="{Binding CmdMoveTdt}" CommandParameter="false"/>
-                <MenuItem Header="Manage Category..." Name="MniTaskManage" Command="{Binding CmdManageCats}"/>
-                <MenuItem Header="Find Task..." Name="MniTaskFind" Command="{Binding CmdFindTdt}"/>
+                <MenuItem Header="_Add..." Name="MniTaskAdd" Command="{Binding CmdAddTdt}"/>
+                <MenuItem Header="_Edit..." Name="MniTaskEdit" Command="{Binding CmdEditTdt}"/>
+                <MenuItem Header="_Delete" Name="MniTaskDelete" Command="{Binding CmdDeleteTdt}"/>
+                <MenuItem Header="_Toggle Done" Name="MniTaskToggle" Command="{Binding CmdToggleTdt}"/>
+                <MenuItem Header="Move _Up" Name="MniTaskMoveUp" Command="{Binding CmdMoveTdt}" CommandParameter="up"/>
+                <MenuItem Header="Move _Down" Name="MniTaskMoveDown" Command="{Binding CmdMoveTdt}" CommandParameter="down"/>
+                <MenuItem Header="Manage _Category..." Name="MniTaskManage" Command="{Binding CmdManageCats}"/>
+                <MenuItem Header="_Find Task..." Name="MniTaskFind" Command="{Binding CmdFindTdt}"/>
             </MenuItem>
             <MenuItem Header="View">
-                <MenuItem Header="Sort">
-                    <MenuItem Header="By Deadline" Name="MniSortDeadline" Command="{Binding CmdSort}" CommandParameter="deadline"/>
-                    <MenuItem Header="By Priority" Name="MniSortPriority" Command="{Binding CmdSort}" CommandParameter="priority"/>
+                <MenuItem Header="_Sort">
+                    <MenuItem Header="By _Deadline" Name="MniSortDeadline" Command="{Binding CmdSort}" CommandParameter="deadline"/>
+                    <MenuItem Header="By _Priority" Name="MniSortPriority" Command="{Binding CmdSort}" CommandParameter="priority"/>
                 </MenuItem>
-                <MenuItem Header="Filter">
-                    <MenuItem Header="Remove filter" Name="MniFilterClear" Command="{Binding CmdFilter}" CommandParameter="clear" ></MenuItem>
-                    <MenuItem Header="Category..." Name="MniFilterCategory" Command="{Binding CmdFilter}" CommandParameter="category" ></MenuItem>
+                <MenuItem Header="_Filter">
+                    <MenuItem Header="_Remove filter" Name="MniFilterClear" Command="{Binding CmdFilter}" CommandParameter="clear" ></MenuItem>
+                    <MenuItem Header="_Category..." Name="MniFilterCategory" Command="{Binding CmdFilter}" CommandParameter="category" ></MenuItem>
                     <MenuItem Header="Tasks Done" Name="MniFilterDone" Command="{Binding CmdFilter}" CommandParameter="done" ></MenuItem>
                     <MenuItem Header="Tasks Done After Deadline" Name="MniFilterOverdue" Command="{Binding CmdFilter}" CommandParameter="doneAfterDeadline" ></MenuItem>
                     <MenuItem Header="Tasks Not Done Exceeding Deadline" Name="MniFilterExcDeadline" Command="{Binding CmdFilter}" CommandParameter="notDoneAfterDeadline" ></MenuItem>
@@ -67,8 +67,8 @@
                 </MenuItem>
                 <MenuItem Header="Statistics" Name="MniStatsToggle" IsCheckable="true" IsChecked="True" Click="MniStatsToggle_OnClick"></MenuItem>
             </MenuItem>
-            <MenuItem Header="Help">
-                <MenuItem Header="About" Name="MniAbout" Click="MniAbout_OnClick"/>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About" Name="MniAbout" Click="MniAbout_OnClick"/>
             </MenuItem>
         </Menu>
 

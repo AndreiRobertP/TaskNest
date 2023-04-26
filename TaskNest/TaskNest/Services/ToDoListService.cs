@@ -9,7 +9,6 @@ namespace TaskNest.Services
         public static bool ValidateToDoList(ObservableCollection<ToDoList> allLists, string name, ToDoList oldList)
         {
             //Validate name
-
             if (string.IsNullOrEmpty(name))
                 return false;
 
@@ -77,13 +76,7 @@ namespace TaskNest.Services
         {
             var originalElementPosition = container.IndexOf(listToMove);
 
-            if (originalElementPosition == -1)
-                return;
-
-            if (moveUp && originalElementPosition == 0)
-                return;
-
-            if (!moveUp && originalElementPosition == container.Count - 1)
+            if(!CanMoveList(listToMove, container, moveUp))
                 return;
 
             if (moveUp)
@@ -98,6 +91,22 @@ namespace TaskNest.Services
                 container[originalElementPosition + 1] = listToMove;
                 container[originalElementPosition] = tmp;
             }
+        }
+
+        public static bool CanMoveList(ToDoList listToMove, BindingList<ToDoList> container, bool moveUp)
+        {
+            var originalElementPosition = container.IndexOf(listToMove);
+
+            if (originalElementPosition == -1)
+                return false;
+
+            if (moveUp && originalElementPosition == 0)
+                return false;
+
+            if (!moveUp && originalElementPosition == container.Count - 1)
+                return false;
+
+            return true;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace TaskNest.ViewModels
     {
         public ToDoDatabase Db { get; set; }
 
-        // Filtering criterium
+        // Filtering criterium for tasks
         private Func<ToDoTask, bool> _taskFilteringCriterium = task => true;
         public Func<ToDoTask, bool> TaskFilteringCriterium
         {
@@ -24,6 +24,18 @@ namespace TaskNest.ViewModels
             {
                 _taskFilteringCriterium = value;
                 NotifyPropertyChangedTasks();
+            }
+        }
+
+        // Filtering criterium for lists
+        private Func<ToDoList, bool> _listsFilteringCriterium = list => true;
+        public Func<ToDoList, bool> ListsFilteringCriterium
+        {
+            get => _listsFilteringCriterium;
+            set
+            {
+                _listsFilteringCriterium = value;
+                NotifyPropertyChangedLists();
             }
         }
 
@@ -86,7 +98,17 @@ namespace TaskNest.ViewModels
         // TreeView Navigation Content
         public BindingList<ToDoList> ToDoLists
         {
-            get { return Db.RootLists; }
+            get
+            {
+                BindingList<ToDoList> listOfList = new BindingList<ToDoList>();
+
+                foreach (var list in Db.RootLists)
+                {
+                    listOfList.Add(list);
+                }
+
+                return listOfList;
+            }
         }
 
         //Extra
@@ -264,7 +286,8 @@ namespace TaskNest.ViewModels
                         listEditView.ShowDialog();
 
                         NotifyPropertyChangedLists();
-                    }
+                    },
+                    () => CurrentToDoList != null
                 ));
             }
         }
@@ -336,19 +359,29 @@ namespace TaskNest.ViewModels
         }
 
 
-        private RelayCommand<bool> _cmdMoveTdl;
-        public RelayCommand<bool> CmdMoveTdl
+        private RelayCommand<string> _cmdMoveTdl;
+        public RelayCommand<string> CmdMoveTdl
         {
             get
             {
-                return _cmdMoveTdl ?? (_cmdMoveTdl = new RelayCommand<bool>(
+                return _cmdMoveTdl ?? (_cmdMoveTdl = new RelayCommand<string>(
                     (direction) =>
                     {
                         if (CurrentToDoList == null)
                             return;
 
-                        ToDoListService.MoveList(CurrentToDoList, CurrentToDoList.Parent.GetDirectDescendentsSublists(), direction);
+                        bool isMoveUp = direction.Equals("up");
+                        ToDoListService.MoveList(CurrentToDoList, CurrentToDoList.Parent.GetDirectDescendentsSublists(),
+                            isMoveUp);
                         NotifyPropertyChangedLists();
+                    },
+                    (direction) =>
+                    {
+                        if (CurrentToDoList == null)
+                            return false;
+
+                        bool isMoveUp = direction.Equals("up");
+                        return ToDoListService.CanMoveList(CurrentToDoList, CurrentToDoList.Parent.GetDirectDescendentsSublists(), isMoveUp);
                     }
                 ));
             }
@@ -444,19 +477,29 @@ namespace TaskNest.ViewModels
         }
 
 
-        private RelayCommand<bool> _cmdMoveTdt;
-        public RelayCommand<bool> CmdMoveTdt
+        private RelayCommand<string> _cmdMoveTdt;
+        public RelayCommand<string> CmdMoveTdt
         {
             get
             {
-                return _cmdMoveTdt ?? (_cmdMoveTdt = new RelayCommand<bool>(
+                return _cmdMoveTdt ?? (_cmdMoveTdt = new RelayCommand<string>(
                     (direction) =>
                     {
+                        bool isMoveUp = direction.Equals("up");
+
                         if (CurrentToDoTask == null || CurrentToDoList == null)
                             return;
 
-                        ToDoTaskService.MoveTask(CurrentToDoTask, CurrentToDoList, direction);
+                        ToDoTaskService.MoveTask(CurrentToDoTask, CurrentToDoList, isMoveUp);
                         NotifyPropertyChangedTasks();
+                    },
+                    (direction) =>
+                    {
+                        if (CurrentToDoTask == null || CurrentToDoList == null)
+                            return false;
+
+                        bool isMoveUp = direction.Equals("up");
+                        return ToDoTaskService.CanMoveTask(CurrentToDoTask, CurrentToDoList, isMoveUp);
                     }
                 ));
             }

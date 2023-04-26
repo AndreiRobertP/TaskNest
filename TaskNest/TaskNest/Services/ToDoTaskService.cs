@@ -54,14 +54,8 @@ namespace TaskNest.Services
         public static void MoveTask(ToDoTask taskToMove, ToDoList list, bool moveUp)
         {
             var originalElementPosition = list.Tasks.IndexOf(taskToMove);
-            
-            if (originalElementPosition == -1)
-                return;
 
-            if (moveUp && originalElementPosition == 0)
-                return;
-
-            if (!moveUp && originalElementPosition == list.Tasks.Count - 1)
+            if (!CanMoveTask(taskToMove, list, moveUp))
                 return;
 
             if (moveUp)
@@ -76,6 +70,22 @@ namespace TaskNest.Services
                 list.Tasks[originalElementPosition + 1] = taskToMove;
                 list.Tasks[originalElementPosition] = tmp;
             }
+        }
+
+        public static bool CanMoveTask(ToDoTask taskToMove, ToDoList list, bool moveUp)
+        {
+            var originalElementPosition = list.Tasks.IndexOf(taskToMove);
+
+            if (originalElementPosition == -1)
+                return false;
+
+            if (moveUp && originalElementPosition == 0)
+                return false;
+
+            if (!moveUp && originalElementPosition == list.Tasks.Count - 1)
+                return false;
+
+            return true;
         }
 
         public static void DeleteTask(ToDoTask taskToDelete, ToDoList list)
