@@ -10,12 +10,20 @@ namespace TaskNest.Services
     {
         public static void SerializeDatabase(ToDoDatabase db, string filename)
         {
-            XmlSerializer xmlser = new XmlSerializer(typeof(ToDoDatabase));
-            FileStream fileStr = new FileStream(filename, FileMode.Create);
-            xmlser.Serialize(fileStr, db);
-            fileStr.Dispose();
+            try
+            {
+                XmlSerializer xmlser = new XmlSerializer(typeof(ToDoDatabase));
+                FileStream fileStr = new FileStream(filename, FileMode.Create);
+                xmlser.Serialize(fileStr, db);
+                fileStr.Dispose();
 
-            SetLastDatabaseFilepath(filename);
+                SetLastDatabaseFilepath(filename);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
         }
 
         public static bool DeserializeObject(ToDoDatabase db, string filename)

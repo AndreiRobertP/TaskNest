@@ -29,8 +29,8 @@
             <MenuItem Header="_File">
                 <MenuItem Header="_Open database..." Name="MniFileOpen" Command="{Binding CmdOpenDatabase}"/>
                 <MenuItem Header="_New database..." Name="MniFileNew" Command="{Binding CmdNewDatabase}"/>
-                <MenuItem Header="_Archive database..." Name="MniFileArchive" Command="{Binding CmdArchiveDatabase}"/>
-                <MenuItem Header="_Save changes" Name="MniFileSave" Command="{Binding CmdSaveDatabase}"/>
+                <MenuItem Header="_Archive/Save as..." Name="MniFileArchive" Command="{Binding CmdArchiveDatabase}"/>
+                <MenuItem Header="_Save" Name="MniFileSave" Command="{Binding CmdSaveDatabase}"/>
                 <MenuItem Header="_Quit" Name="MniFileExit" Click="MniFileExit_OnClick" />
             </MenuItem>
             <MenuItem Header="TDL">

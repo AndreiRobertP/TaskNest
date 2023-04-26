@@ -13,45 +13,28 @@ namespace TaskNest.ViewModels
 {
     public class MainWindowVm : INotifyPropertyChanged
     {
+        public MainWindowVm()
+        {
+            Db = new ToDoDatabase();
+            StatsVM = new StatisticsVM(Db);
+
+            if (!ToDoDatabaseService.IsSaveDatabasePathValid())
+            {
+                MessageBox.Show(
+                    "No valid database could be opened. Please  create/open a database explicitly before exiting otherwise your changes will be lost", "Unable to open database file", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            }
+            ToDoDatabaseService.DeserializeObject(Db, ToDoDatabaseService.GetLastDatabaseFilepath());
+        }
+
+        //================================
+        // MAIN MODEL
+        //================================
         public ToDoDatabase Db { get; set; }
 
-        // Filtering criterium for tasks
-        private Func<ToDoTask, bool> _taskFilteringCriterium = task => true;
-        public Func<ToDoTask, bool> TaskFilteringCriterium
-        {
-            get => _taskFilteringCriterium;
-            set
-            {
-                _taskFilteringCriterium = value;
-                NotifyPropertyChangedTasks();
-            }
-        }
 
-        // Filtering criterium for lists
-        private Func<ToDoList, bool> _listsFilteringCriterium = list => true;
-        public Func<ToDoList, bool> ListsFilteringCriterium
-        {
-            get => _listsFilteringCriterium;
-            set
-            {
-                _listsFilteringCriterium = value;
-                NotifyPropertyChangedLists();
-            }
-        }
-
-        // Current List
-        private ToDoList _currentToDoList;
-        public ToDoList CurrentToDoList
-        {
-            get => _currentToDoList;
-            set
-            {
-                _currentToDoList = value;
-                NotifyPropertyChanged(nameof(Tasks));
-            }
-        }
-
-
+        //================================
+        // MAIN PROPRIETIES
+        //================================
         public BindingList<ToDoTask> Tasks
         {
             get
@@ -71,31 +54,6 @@ namespace TaskNest.ViewModels
             }
         }
 
-        public IToDoListNode CurrentNodeParent => CurrentToDoList.Parent;
-
-
-        // Current Task
-        private ToDoTask _currentToDoTask;
-        public ToDoTask CurrentToDoTask
-        {
-            get => _currentToDoTask;
-            set
-            {
-                _currentToDoTask = value;
-                NotifyPropertyChanged(nameof(TaskContent));
-            }
-        }
-
-        public string TaskContent
-        {
-            get
-            {
-                return CurrentToDoTask == null ? "" : CurrentToDoTask.Description;
-            }
-        }
-
-
-        // TreeView Navigation Content
         public BindingList<ToDoList> ToDoLists
         {
             get
@@ -111,26 +69,86 @@ namespace TaskNest.ViewModels
             }
         }
 
-        //Extra
-        public ObservableCollection<ToDoTask> AllTasks => Db.GetToDoTasksSubtree();
 
-        //Statistics
-        public StatisticsVM StatsVM { get; set; }
-
-        public MainWindowVm()
+        //================================
+        // SELECTED TDLs / TDTs
+        //================================
+        private ToDoList _currentToDoList;
+        public ToDoList CurrentToDoList
         {
-            Db = new ToDoDatabase();
-            StatsVM = new StatisticsVM(Db);
-
-            ToDoDatabaseService.DeserializeObject(Db, ToDoDatabaseService.GetLastDatabaseFilepath());
+            get => _currentToDoList;
+            set
+            {
+                _currentToDoList = value;
+                NotifyPropertyChanged(nameof(Tasks));
+            }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        private ToDoTask _currentToDoTask;
+        public ToDoTask CurrentToDoTask
+        {
+            get => _currentToDoTask;
+            set
+            {
+                _currentToDoTask = value;
+                NotifyPropertyChanged(nameof(TaskContent));
+            }
+        }
 
+        public string TaskContent => CurrentToDoTask == null ? "" : CurrentToDoTask.Description;
+
+
+
+        //================================
+        // FILTERING FUNCTIONS
+        //================================
+
+        private Func<ToDoTask, bool> _taskFilteringCriterium = task => true;
+        public Func<ToDoTask, bool> TaskFilteringCriterium
+        {
+            get => _taskFilteringCriterium;
+            set
+            {
+                _taskFilteringCriterium = value;
+                NotifyPropertyChangedTasks();
+            }
+        }
+
+        private Func<ToDoList, bool> _listsFilteringCriterium = list => true;
+        public Func<ToDoList, bool> ListsFilteringCriterium
+        {
+            get => _listsFilteringCriterium;
+            set
+            {
+                _listsFilteringCriterium = value;
+                NotifyPropertyChangedLists();
+            }
+        }
+
+
+        //================================
+        // EXTRA
+        //================================
+        public ObservableCollection<ToDoTask> AllTasks => Db.GetToDoTasksSubtree();
+
+        public StatisticsVM StatsVM { get; set; }
+
+
+        //================================
+        // INotifyProprietyChanged Stuff
+        //================================
+
+        public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
+
+        //================================
+        // CUSTOM NOTIFIERS
+        //================================
 
         public void NotifyPropertyChangedStatistics()
         {
@@ -148,7 +166,6 @@ namespace TaskNest.ViewModels
             NotifyPropertyChanged(nameof(ToDoLists));
             NotifyPropertyChangedTasks();
         }
-
 
 
 

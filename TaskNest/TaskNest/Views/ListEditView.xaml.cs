@@ -23,6 +23,7 @@ namespace TaskNest.Views
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
         {
+            DialogResult = false;
             Close();
         }
 
