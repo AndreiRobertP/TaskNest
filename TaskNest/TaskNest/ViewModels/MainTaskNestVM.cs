@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight.CommandWpf;
 using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
@@ -17,7 +17,6 @@ namespace TaskNest.ViewModels
 
         // Filtering criterium
         private Func<ToDoTask, bool> _taskFilteringCriterium = task => true;
-
         public Func<ToDoTask, bool> TaskFilteringCriterium
         {
             get => _taskFilteringCriterium;
@@ -30,7 +29,6 @@ namespace TaskNest.ViewModels
 
         // Current List
         private ToDoList _currentToDoList;
-
         public ToDoList CurrentToDoList
         {
             get => _currentToDoList;
@@ -40,6 +38,7 @@ namespace TaskNest.ViewModels
                 NotifyPropertyChanged("Tasks");
             }
         }
+
 
         public BindingList<ToDoTask> Tasks
         {
@@ -65,7 +64,6 @@ namespace TaskNest.ViewModels
 
         // Current Task
         private ToDoTask _currentToDoTask;
-
         public ToDoTask CurrentToDoTask
         {
             get => _currentToDoTask;
@@ -80,15 +78,16 @@ namespace TaskNest.ViewModels
         {
             get
             {
-                if (CurrentToDoTask == null)
-                    return "";
-                return CurrentToDoTask.Description;
+                return CurrentToDoTask == null ? "" : CurrentToDoTask.Description;
             }
         }
 
 
         // TreeView Navigation Content
-        public BindingList<ToDoList> ToDoLists => Db.RootLists;
+        public BindingList<ToDoList> ToDoLists
+        {
+            get { return Db.RootLists; }
+        }
 
         //Extra
         public ObservableCollection<ToDoTask> AllTasks => Db.GetToDoTasksSubtree();
@@ -143,10 +142,12 @@ namespace TaskNest.ViewModels
                 return _cmdOpenDatabase ?? (_cmdOpenDatabase = new RelayCommand(
                     () =>
                     {
-                        OpenFileDialog openFileDialog = new OpenFileDialog();
-                        openFileDialog.Filter = "TaskNest Database Files | *.xml";
-                        openFileDialog.Title = "Choose ToDoDatabase";
-                        openFileDialog.Multiselect = false;
+                        OpenFileDialog openFileDialog = new OpenFileDialog
+                        {
+                            Filter = "TaskNest Database Files | *.xml",
+                            Title = "Choose ToDoDatabase",
+                            Multiselect = false
+                        };
 
                         var resp = openFileDialog.ShowDialog();
                         if (!resp.HasValue || resp.Value == false)
@@ -219,8 +220,7 @@ namespace TaskNest.ViewModels
             {
                 return _cmdSaveDatabase ?? (_cmdSaveDatabase = new RelayCommand(
                     () => { ToDoDatabaseService.SaveChangesToCurrentDatabase(Db); },
-                    //ToDoDatabaseService.IsSaveDatabasePathValid
-                    () => true
+                    ToDoDatabaseService.IsSaveDatabasePathValid
                 ));
             }
         }
@@ -243,8 +243,7 @@ namespace TaskNest.ViewModels
                         listEditView.ShowDialog();
 
                         NotifyPropertyChangedLists();
-                    },
-                    () => true
+                    }
                 ));
             }
         }
@@ -265,9 +264,7 @@ namespace TaskNest.ViewModels
                         listEditView.ShowDialog();
 
                         NotifyPropertyChangedLists();
-                    },
-                    //() => CurrentToDoList != null
-                    () => true
+                    }
                 ));
             }
         }
@@ -287,8 +284,7 @@ namespace TaskNest.ViewModels
                         ListEditView listEditView = new ListEditView(CurrentToDoList, Db.GetToDoListsSubtree(), CurrentToDoList);
                         listEditView.ShowDialog();
                     },
-                    //() => CurrentToDoList != null
-                    () => true
+                    () => CurrentToDoList != null
                 ));
             }
         }
@@ -314,8 +310,7 @@ namespace TaskNest.ViewModels
                         ToDoListService.RemoveList(CurrentToDoList);
                         NotifyPropertyChangedStatistics();
                     },
-                    //() => CurrentToDoList != null
-                    () => true
+                    () => CurrentToDoList != null
                 ));
             }
         }
@@ -335,8 +330,7 @@ namespace TaskNest.ViewModels
                         ListChangePathView listChangePathView = new ListChangePathView(Db, CurrentToDoList);
                         listChangePathView.ShowDialog();
                     },
-                    //() => CurrentToDoList != null
-                    () => true
+                    () => CurrentToDoList != null
                 ));
             }
         }
@@ -355,9 +349,7 @@ namespace TaskNest.ViewModels
 
                         ToDoListService.MoveList(CurrentToDoList, CurrentToDoList.Parent.GetDirectDescendentsSublists(), direction);
                         NotifyPropertyChangedLists();
-                    },
-                    //() => CurrentToDoList != null
-                    (direction) => true
+                    }
                 ));
             }
         }
@@ -382,8 +374,7 @@ namespace TaskNest.ViewModels
                         editWindow.ShowDialog();
                         NotifyPropertyChangedTasks();
                     },
-                    //() => CurrentToDoList != null
-                    () => true
+                    () => CurrentToDoList != null
                 ));
             }
         }
@@ -407,8 +398,7 @@ namespace TaskNest.ViewModels
                         editWindow.ShowDialog();
                         NotifyPropertyChangedTasks();
                     },
-                    //() => CurrentToDoList != null && CurrentToDoTask != null
-                    () => true
+                    () => CurrentToDoList != null && CurrentToDoTask != null
                 ));
             }
         }
@@ -428,8 +418,7 @@ namespace TaskNest.ViewModels
                         ToDoTaskService.DeleteTask(CurrentToDoTask, CurrentToDoList);
                         NotifyPropertyChangedTasks();
                     },
-                    //() => CurrentToDoList != null && CurrentToDoTask != null
-                    () => true
+                    () => CurrentToDoList != null && CurrentToDoTask != null
                 ));
             }
         }
@@ -449,8 +438,7 @@ namespace TaskNest.ViewModels
                         ToDoTaskService.ToggleTaskDone(CurrentToDoTask);
                         NotifyPropertyChangedTasks();
                     },
-                    //() => CurrentToDoTask != null
-                    () => true
+                    () => CurrentToDoTask != null
                 ));
             }
         }
@@ -469,9 +457,7 @@ namespace TaskNest.ViewModels
 
                         ToDoTaskService.MoveTask(CurrentToDoTask, CurrentToDoList, direction);
                         NotifyPropertyChangedTasks();
-                    },
-                    //() => CurrentToDoTask != null && CurrentToDoList != null
-                    (direction) => true
+                    }
                 ));
             }
         }
@@ -489,8 +475,7 @@ namespace TaskNest.ViewModels
                         categoriesManageView.Show();
 
                         NotifyPropertyChangedTasks();
-                    },
-                    () => true
+                    }
                 ));
             }
         }
@@ -507,8 +492,7 @@ namespace TaskNest.ViewModels
                         TaskSearchView taskSearchView = new TaskSearchView();
                         taskSearchView.SetDatabase(Db);
                         taskSearchView.Show();
-                    },
-                    () => true
+                    }
                 ));
             }
         }

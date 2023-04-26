@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Threading;
 using TaskNest.Models;
 using TaskNest.Services;
 using TaskNest.ViewModels;
@@ -13,12 +15,18 @@ namespace TaskNest
     public partial class MainWindow : Window
     {
         public MainWindowVm Mvvm { get; set; }
+        public DispatcherTimer Timer { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
 
             Mvvm = DataContext as MainWindowVm;
+
+            Timer = new System.Windows.Threading.DispatcherTimer();
+            Timer.Tick += new EventHandler((sender, e) => { CommandManager.InvalidateRequerySuggested(); });
+            Timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            Timer.Start();
         }
 
         private void TvwMenu_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
@@ -46,6 +54,7 @@ namespace TaskNest
 
         private void MniFileExit_OnClick(object sender, RoutedEventArgs e)
         {
+            Timer.Stop();
             Close();
         }
 
