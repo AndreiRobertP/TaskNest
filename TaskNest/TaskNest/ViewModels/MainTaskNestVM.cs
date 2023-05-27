@@ -18,11 +18,6 @@ namespace TaskNest.ViewModels
             Db = new ToDoDatabase();
             StatsVM = new StatisticsVM(Db);
 
-            if (!ToDoDatabaseService.IsSaveDatabasePathValid())
-            {
-                MessageBox.Show(
-                    "No valid database could be opened. Please  create/open a database explicitly before exiting otherwise your changes will be lost", "Unable to open database file", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            }
             ToDoDatabaseService.DeserializeObject(Db, ToDoDatabaseService.GetLastDatabaseFilepath());
         }
 
@@ -369,6 +364,8 @@ namespace TaskNest.ViewModels
 
                         ListChangePathView listChangePathView = new ListChangePathView(Db, CurrentToDoList);
                         listChangePathView.ShowDialog();
+
+                        NotifyPropertyChangedLists();
                     },
                     () => CurrentToDoList != null
                 ));

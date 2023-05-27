@@ -111,7 +111,10 @@ namespace TaskNest.Services
                 return false;
             }
 
-            return filename != null;
+            if (filename == null)
+                return false;
+
+            return File.Exists(filename);
         }
 
         public static void SetLastDatabaseFilepath(string filename)
